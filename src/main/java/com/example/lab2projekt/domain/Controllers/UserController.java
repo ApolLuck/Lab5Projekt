@@ -45,6 +45,9 @@ public class UserController {
             model.addAttribute("error", "Nie udało się aktywować konta. Kod aktywacyjny jest nieprawidłowy.");
         }
 
+
+
+
         return "loginForm"; // Strona logowania po aktywacji
     }
 

@@ -20,11 +20,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Size(min = 4, max = 36)
-    //@UniqueUsername
     private String username;
-    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$")
     private String password;
-    @Transient//nie bÄdzie odwzorowana w db
+    @Transient
     private String passwordConfirm;
     private boolean enabled = false;
     private String email;
@@ -35,7 +33,7 @@ public class User {
         return password == null || passwordConfirm == null || password.equals(passwordConfirm);
     }
 
-    @ManyToMany//(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
