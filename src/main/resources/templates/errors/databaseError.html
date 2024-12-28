@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Błąd połączenia z bazą danych</title>
+</head>
+<body>
+<h1>Błąd: Brak połączenia z bazą danych</h1>
+<p th:text="${errorMessage}"></p>
+<p>Sprawdź, czy usługa bazy danych działa poprawnie.</p>
+<a th:href="@{/static}">Powrót do strony głównej</a>
+</body>
+</html>

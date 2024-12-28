@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+  <title th:text="#{title.login}">Please Log In</title>
+</head>
+<body>
+<h1 th:text="#{title.login}">Please Log In</h1>
+
+<!-- Sekcja komunikatów o rejestracji -->
+<div th:if="${message}">
+  <p th:text="${message}" style="color: green;"></p>  <!-- Komunikat o udanej rejestracji -->
+</div>
+
+<div th:if="${error}">
+  <p th:text="${error}" style="color: red;"></p>  <!-- Komunikat o błędzie -->
+</div>
+
+<div th:if="${param.error}">
+  <p th:text="#{error.invalid.credentials}">Invalid username and password.</p>
+</div>
+<div th:if="${param.logout}">
+  <p th:text="#{message.logged.out}">You have been logged out.</p>
+</div>
+
+<form th:action="@{/Zaloguj}" method="post">
+  <div>
+    <label th:for="username" th:text="#{label.username}">Username:</label>
+    <input type="text" id="username" name="username" th:placeholder="#{placeholder.username}"/>
+  </div>
+  <div>
+    <p></p>
+    <label th:for="password" th:text="#{label.password}">Password:</label>
+    <input type="password" id="password" name="password" th:placeholder="#{placeholder.password}"/>
+  </div>
+  <p></p>
+  <input type="submit" th:value="#{button.login}" value="Log in"/>
+</form>
+
+<div>
+  <p th:text="#{p.registerInfo}"></p>
+  <a href="?lang=en" th:text="#{link.register}"></a>
+</div>
+
+<div>
+  <p th:text="#{p.languageSelection}"></p>
+  <a href="?lang=pl" th:text="#{link.polish}">Polski</a> |
+  <a href="?lang=en" th:text="#{link.english}"><English></English></a>
+</div>
+
+</body>
+</html>

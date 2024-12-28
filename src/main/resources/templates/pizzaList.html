@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Menu</title>
+</head>
+<body>
+<h1>Lista pizz</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nazwa</th>
+        <th>Składniki</th>
+        <th>Rozmiar [cm]</th>
+        <th>Cena</th>
+        <th>Grube ciasto</th>
+        <th>Dodatkowy ser</th>
+        <th>Data wprowadzenia</th>
+        <th>Opcje</th>
+        <th>Opakowanie</th>
+        <th>Genre</th>
+        <th>createdDate</th>
+        <th>modifiedDate</th>
+        <th>createdBy</th>
+        <th>modifiedBy</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="pizza : ${pizzas}">
+        <div th:object="${pizza}">
+            <td th:text="*{id}"></td>
+            <td th:text="*{nazwa}"></td>
+            <td th:text="*{skladniki}"></td>
+            <td th:text="*{srednica}" ></td>
+            <td th:text="${#numbers.formatDecimal(pizza.cena,2,2)} + ' zł'"></td>
+            <div th:switch="*{grube_ciasto}">
+                <td th:case="false">nie</td>
+                <td th:case="true">tak</td>
+            </div>
+            <div th:switch="*{dodatkowy_ser}">
+                <td th:case="false">nie</td>
+                <td th:case="true">tak</td>
+            </div>
+            <td th:text="${#temporals.format(pizza.data_wprowadzenia, 'dd-MM-yyyy')}"></td>
+            <td>
+                <a sec:authorize="hasRole('USER')" th:href="@{/details(id=${pizza.id})}">Szczegóły</a>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/editPizza(id=${pizza.id})}">Edytuj</a>
+                <a sec:authorize="hasRole('ADMIN')" th:href="@{/deletePizza(id=${pizza.id})}">Usuń</a>
+            </td>
+            <td th:text="*{coverType.nazwa}" ></td>
+            <td>
+                <span th:each="genre : *{genres}" th:text="${genre.name} + ','" />
+            </td>
+            <td th:text="*{createdDate}"></td>
+            <td th:text="*{modifiedDate}"></td>
+            <td th:text="*{createdBy}"></td>
+            <td th:text="*{modifiedBy}"></td>
+
+        </div>
+    </tr>
+
+    </tbody>
+</table>
+<br>
+<a th:href="@{/}">Powrót do strony głównej</a>
+<a sec:authorize="hasRole('ADMIN')" th:href="@{/addPizza(id=null)}">Dodaj kolejną pizze</a>
+<form th:action="@{/logout}" id="logout" th:method="post">
+    <button type="submit" class="btn btn-warning">Wyloguj</button>
+</form>
+
+</br>
+</body>
+</html>

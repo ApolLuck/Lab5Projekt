@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>One & Only</title>
+</head>
+<body>
+<h1>Pizza Info</h1>
+        <div th:object="${pizzunia}">
+            <ul>
+                <li th:text="*{id}"></li>
+                <li th:text="*{nazwa}"></li>
+                <li th:text="*{skladniki}"></li>
+                <li th:text="*{srednica}" ></li>
+                <li th:text="${#numbers.formatDecimal(pizzunia.cena,2,2)} + ' zł'"></li>
+                <div th:switch="*{grube_ciasto}">
+                    <li th:case="false">nie</li>
+                    <li th:case="true">tak</li>
+                </div>
+                <div th:switch="*{dodatkowy_ser}">
+                    <li th:case="false">nie</li>
+                    <li th:case="true">tak</li>
+                </div>
+                <li th:text="${#temporals.format(pizzunia.data_wprowadzenia, 'dd-MM-yyyy')}"></li>
+                <li th:text="*{coverType.nazwa}" ></li>
+                <li>
+                    <span th:each="genre : *{genres}" th:text="${genre.name} + ','" />
+                </li>
+            </ul>
+        </div>
+<br>
+<a th:href="@{/}">Powrót do strony głównej</a>
+</br>
+</body>
+</html>

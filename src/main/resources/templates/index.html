@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Strona startowa</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div sec:authorize="isAuthenticated()" >
+        <p>Witaj, <strong><span sec:authentication="name"></span></strong>!</p>
+        <p>Twoje role:</p>
+        <ul>
+            <li th:each="role: ${#authentication.getAuthorities()}" th:text="${role}"></li>
+        </ul>
+    </div>
+</header>
+
+<main>
+    <h1>Witamy w Pizzerii!</h1>
+    <p>
+        <a href="http://localhost:8080/pizzas" class="btn">Przejdź do menu</a>
+    </p>
+</main>
+
+<footer>
+    <p>© 2024 Pizzeria. Wszystkie prawa zastrzeżone.</p>
+</footer>
+</body>
+</html>
