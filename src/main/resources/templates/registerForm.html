@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Rejestracja nowego użytkownika</h1>
-<form th:action="@{/register}" th:object="${user}" method="post">
+<form th:action="@{/register}" th:object="${appUser}" method="post">
     <div>
         <label for="username">Nazwa użytkownika:</label>
         <input type="text" th:field="*{username}" placeholder="Wpisz nazwę użytkownika"/>

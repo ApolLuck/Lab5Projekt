@@ -94,7 +94,8 @@ public class SpringSecurityConfig{
                                 mvcMatcherBuilder.pattern("/"),
                                 mvcMatcherBuilder.pattern("/pizzas"),
                                 mvcMatcherBuilder.pattern("/Zaloguj"),
-                                mvcMatcherBuilder.pattern("/register")
+                                mvcMatcherBuilder.pattern("/register"),
+                                mvcMatcherBuilder.pattern("/activate")
                         ).permitAll()
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/details")

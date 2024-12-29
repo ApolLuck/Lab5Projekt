@@ -4,7 +4,7 @@ import com.example.lab2projekt.domain.Objects.CoverType;
 import com.example.lab2projekt.domain.Objects.Pizza;
 import com.example.lab2projekt.domain.Objects.PizzaGenre;
 import com.example.lab2projekt.domain.Objects.User.Role;
-import com.example.lab2projekt.domain.Objects.User.User;
+import com.example.lab2projekt.domain.Objects.User.AppUser;
 import com.example.lab2projekt.domain.repositories.*;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,19 +92,19 @@ public class RepositoryInitializer {
                 roleRepository.save(roleUser);
                 roleRepository.save(roleAdmin);
 
-                User user = new User("user", true);
-                user.setRoles(Set.of(roleUser));
-                user.setPassword(passwordEncoder.encode("user"));
+                AppUser appUser = new AppUser("user", true);
+                appUser.setRoles(Set.of(roleUser));
+                appUser.setPassword(passwordEncoder.encode("user"));
 
-                User admin = new User("admin", true);
+                AppUser admin = new AppUser("admin", true);
                 admin.setRoles(Set.of(roleAdmin));
                 admin.setPassword(passwordEncoder.encode("admin"));
 
-                User test = new User("test", true);
+                AppUser test = new AppUser("test", true);
                 test.setRoles(Set.of(roleUser, roleAdmin));
                 test.setPassword(passwordEncoder.encode("test"));
 
-                userRepository.save(user);
+                userRepository.save(appUser);
                 userRepository.save(admin);
                 userRepository.save(test);
             }

@@ -20,7 +20,7 @@ public class Role {
     @Enumerated(EnumType.STRING)//przechowywane w bazie w postaci string
     private Types type;
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private Set<AppUser> appUsers;
 
     public Role(Types type){
         this.type = type;

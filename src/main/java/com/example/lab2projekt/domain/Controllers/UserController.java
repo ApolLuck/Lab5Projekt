@@ -1,6 +1,6 @@
 package com.example.lab2projekt.domain.Controllers;
 
-import com.example.lab2projekt.domain.Objects.User.User;
+import com.example.lab2projekt.domain.Objects.User.AppUser;
 import com.example.lab2projekt.domain.Services.UserRegistrationService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ public class UserController {
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("appUser", new AppUser());
         return "registerForm"; // Formularz rejestracji
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, Model model) {
+    public String registerUser(@ModelAttribute AppUser appUser, Model model) {
         try {
-            userRegistrationService.registerUser(user);
+            userRegistrationService.registerUser(appUser);
             model.addAttribute("message", "Rejestracja przebiegła pomyślnie! Sprawdź swoją skrzynkę e-mail.");
         } catch (MessagingException e) {
             model.addAttribute("error", "Wystąpił problem z wysłaniem e-maila.");
@@ -44,10 +44,6 @@ public class UserController {
         } else {
             model.addAttribute("error", "Nie udało się aktywować konta. Kod aktywacyjny jest nieprawidłowy.");
         }
-
-
-
-
         return "loginForm"; // Strona logowania po aktywacji
     }
 

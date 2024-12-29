@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
 
@@ -14,7 +13,7 @@ import java.util.Set;
 @Table(name = "users")
 @Getter @Setter
 @NoArgsConstructor
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,11 +38,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String username){
+    public AppUser(String username){
         this(username, false);
     }
 
-    public User(String username, boolean enabled){
+    public AppUser(String username, boolean enabled){
         this.username = username;
         this.enabled = enabled;
     }

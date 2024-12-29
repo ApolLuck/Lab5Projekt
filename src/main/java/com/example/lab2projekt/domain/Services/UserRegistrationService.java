@@ -1,7 +1,7 @@
 package com.example.lab2projekt.domain.Services;
 
+import com.example.lab2projekt.domain.Objects.User.AppUser;
 import com.example.lab2projekt.domain.Objects.User.Role;
-import com.example.lab2projekt.domain.Objects.User.User;
 import com.example.lab2projekt.domain.repositories.RoleRepository;
 import com.example.lab2projekt.domain.repositories.UserRepository;
 import jakarta.mail.MessagingException;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserRegistrationService {
@@ -29,32 +28,32 @@ public class UserRegistrationService {
     }
 
     // Rejestracja użytkownika
-    public void registerUser(User user) throws MessagingException {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);  // Ustawienie zakodowanego hasła
-        user.setActivationCode(generateActivationCode());
-        userRepository.save(user);
-        emailService.sendActivationEmail(user.getEmail(), user.getActivationCode());
+    public void registerUser(AppUser appUser) throws MessagingException {
+        String encodedPassword = passwordEncoder.encode(appUser.getPassword());
+        appUser.setPassword(encodedPassword);  // Ustawienie zakodowanego hasła
+        appUser.setActivationCode(generateActivationCode());
+        userRepository.save(appUser);
+        emailService.sendActivationEmail(appUser.getEmail(), appUser.getActivationCode());
     }
 
     // Aktywacja użytkownika na podstawie kodu aktywacyjnego
     public boolean activateUser(String activationCode) {
-        Optional<User> userOpt = userRepository.findByActivationCode(activationCode);
+        Optional<AppUser> userOpt = userRepository.findByActivationCode(activationCode);
 
         if (userOpt.isPresent()) {
-            User user = userOpt.get();
-            user.setActivationCode(null); // Ustawienie kodu aktywacyjnego na null po aktywacji
-            user.setEnabled(true); // Aktywowanie konta
+            AppUser appUser = userOpt.get();
+            appUser.setActivationCode(null); // Ustawienie kodu aktywacyjnego na null po aktywacji
+            appUser.setEnabled(true); // Aktywowanie konta
 
             // Pobierz rolę ROLE_USER z bazy danych
             Optional<Role> roleOpt = roleRepository.findByType(Role.Types.ROLE_USER);
             if (roleOpt.isPresent()) {
                 Role roleUser = roleOpt.get();
-                user.getRoles().add(roleUser);
+                appUser.getRoles().add(roleUser);
             } else {
                 throw new RuntimeException("Role ROLE_USER not found in the database");
             }
-            userRepository.save(user);
+            userRepository.save(appUser);
 
             return true;
         }
