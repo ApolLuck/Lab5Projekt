@@ -23,9 +23,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -148,6 +151,12 @@ public class PizzaController<JBClass> {
     @GetMapping("/pizzas")
     public String showPizza(Model model) {
         List<Pizza> pizzas = pizzaService.findAllPizzas();
+        pizzas.forEach(pizza -> {
+            if (pizza.getFileContent() != null) {
+                String base64Content = Base64.getEncoder().encodeToString(pizza.getFileContent());
+                pizza.setFileName(base64Content); // Tymczasowe pole na zakodowany obraz
+            }
+        });
         model.addAttribute("pizze", pizzas);
         log.log(Level.DEBUG, "komunikat z metody showPizza");
         return "showMenu";
@@ -185,15 +194,23 @@ public class PizzaController<JBClass> {
 
     // Update pizzy
     @PostMapping("/updatePizza")
-    public String processForm(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult result) {
+    public String processForm(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult result,
+                              MultipartFile multipartFile) {
         try {
             if (result.hasErrors()) {
                 return "editForm";
             }
+            if(!multipartFile.isEmpty()) {//to powinno być w usłudze
+                pizza.setFileName(multipartFile.getOriginalFilename());
+                pizza.setFileContent(multipartFile.getBytes());
+            }
+
             pizzaService.savePizza(pizza);
             log.log(Level.DEBUG, "komunikat z metody processForm");
         } catch (JDBCConnectionException ex) {
             throw ex;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return "redirect:/pizzas";
     }

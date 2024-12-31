@@ -77,9 +77,10 @@ public class Pizza {
     private String createdBy;
     @LastModifiedBy
     private String modifiedBy;
-
-
-
+    @Lob
+    @Column(columnDefinition="BLOB")
+    private byte[] fileContent;
+    private String fileName;
 
 }
 
