@@ -95,15 +95,17 @@ public class SpringSecurityConfig{
                                 mvcMatcherBuilder.pattern("/pizzas"),
                                 mvcMatcherBuilder.pattern("/Zaloguj"),
                                 mvcMatcherBuilder.pattern("/register"),
-                                mvcMatcherBuilder.pattern("/activate")
+                                mvcMatcherBuilder.pattern("/activate"),
+                                mvcMatcherBuilder.pattern("/polak/**")
                         ).permitAll()
-                        .requestMatchers(
-                                mvcMatcherBuilder.pattern("/details")
-                        ).hasRole("USER")
+//                        .requestMatchers(
+//                                mvcMatcherBuilder.pattern("/details")   ---> na czas testow
+//                        ).hasRole("USER")
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/editPizza"),
                                 mvcMatcherBuilder.pattern("/deletePizza"),
-                                mvcMatcherBuilder.pattern("/addPizza")
+                                mvcMatcherBuilder.pattern("/addPizza"),
+                                mvcMatcherBuilder.pattern("/details")   // na czas testow
                         ).hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin((form) -> form

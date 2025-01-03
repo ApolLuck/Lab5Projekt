@@ -47,7 +47,7 @@
             </div>
             <td th:text="${#temporals.format(pizza.data_wprowadzenia, 'dd-MM-yyyy')}"></td>
             <td>
-                <a sec:authorize="hasRole('USER')" th:href="@{/details(id=${pizza.id})}">Szczegóły</a>
+                <a sec:authorize="hasRole('USER') or hasRole('ADMIN')" th:href="@{/details(id=${pizza.id})}">Szczegóły</a>
                 <a sec:authorize="hasRole('ADMIN')" th:href="@{/editPizza(id=${pizza.id})}">Edytuj</a>
                 <a sec:authorize="hasRole('ADMIN')" th:href="@{/deletePizza(id=${pizza.id})}">Usuń</a>
             </td>

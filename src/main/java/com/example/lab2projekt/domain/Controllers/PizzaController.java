@@ -3,6 +3,7 @@ package com.example.lab2projekt.domain.Controllers;
 import com.example.lab2projekt.domain.Exceptions.PizzaNotFoundException;
 import com.example.lab2projekt.domain.Objects.*;
 import com.example.lab2projekt.domain.Services.CoverTypeService;
+import com.example.lab2projekt.domain.Services.FileService;
 import com.example.lab2projekt.domain.Services.PizzaGenreService;
 import com.example.lab2projekt.domain.Services.PizzaService;
 import jakarta.validation.Valid;
@@ -32,12 +33,15 @@ public class PizzaController<JBClass> {
     private final PizzaService pizzaService;
     private final CoverTypeService coverTypeService;
     private final PizzaGenreService pizzaGenreService;
+    private final FileService fileService;
 
     @Autowired
-    public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService) {
+    public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService,
+    FileService fileService) {
         this.pizzaService = pizzaService;
         this.coverTypeService = coverTypeService;
         this.pizzaGenreService = pizzaGenreService;
+        this.fileService = fileService;
     }
 
 
@@ -194,8 +198,10 @@ public class PizzaController<JBClass> {
                 return "editForm";
             }
             if(!multipartFile.isEmpty()) {//to powinno być w usłudze
-                pizza.setFileName(multipartFile.getOriginalFilename());
-                pizza.setFileContent(multipartFile.getBytes());
+//                pizza.setFileName(multipartFile.getOriginalFilename());    wersja z BD w h2
+                pizza.setFileContent(multipartFile.getBytes());           // wersja z BD w h2
+                String savedFilePath = fileService.saveFile(multipartFile, "pizza", pizza.getId().toString());
+                pizza.setFileName(savedFilePath); // Zapisujemy ścieżkę w encji
             }
 
             pizzaService.savePizza(pizza);
@@ -240,10 +246,17 @@ public class PizzaController<JBClass> {
     @GetMapping("/details")
     public ModelAndView pizzaDetails(@RequestParam(value = "id", required = false, defaultValue = "-1") Integer pizzaId) {
         ModelAndView mav = new ModelAndView("showOnePizza");
-        pizzaService.findPizzaById(pizzaId).ifPresent(pizza -> mav.addObject("pizzunia", pizza));
+        pizzaService.findPizzaById(pizzaId).ifPresent(pizza -> {
+            // Zastąp odwrotne ukośniki na normalne ukośniki
+            String normalizedFileName = pizza.getFileName().replace("\\", "/");
+            String relativeFilePath = normalizedFileName.replace("D:/polak/pizza/", ""); // Usuwamy początkową część ścieżki
+            pizza.setFileName(relativeFilePath); // Ustawiamy przetworzoną ścieżkę
+            mav.addObject("pizzunia", pizza);
+        });
         log.log(Level.DEBUG, "komunikat z metody pizzaDetails");
         return mav;
     }
+
 
     @InitBinder("pizza")
     public void initBinder(WebDataBinder binder) {
