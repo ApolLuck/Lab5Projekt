@@ -18,17 +18,17 @@ public class RESTPizzaController {
     }
 
     @GetMapping("/api/pizza/details")
-    public ResponseEntity<Pizza> showDetails(@RequestParam(value = "id", required = false, defaultValue = "-1") Integer pizzaId) {
+    public Pizza showDetails(@RequestParam(value = "id", required = false, defaultValue = "-1") Integer pizzaId) {
         Optional<Pizza> pizzaOptional = pizzaService.findPizzaById(pizzaId);
         if (pizzaOptional.isPresent()) {
             Pizza pizza = pizzaOptional.get();
-            // Zastąp odwrotne ukośniki na normalne ukośniki
+            // Zastąpienie odwrotnych ukośnikow na normalne ukośniki
             String normalizedFileName = pizza.getFileName().replace("\\", "/");
-            String relativeFilePath = normalizedFileName.replace("D:/polak/pizza/", ""); // Usuwamy początkową część ścieżki
-            pizza.setFileName(relativeFilePath); // Ustawiamy przetworzoną ścieżkę
-            return ResponseEntity.ok(pizza); // Zwracamy pizzę w odpowiedzi
+            String relativeFilePath = normalizedFileName.replace("D:/polak/pizza/", ""); // Usuwanie początkowej części ścieżki
+            pizza.setFileName(relativeFilePath); // Aktualizacja sciezki
+            return pizza;
         } else {
-            return ResponseEntity.notFound().build(); // Jeśli nie znaleziono, zwracamy 404
+            return null; // Jeśli nie znaleziono, null
         }
     }
 
