@@ -21,6 +21,7 @@ public class FileService {
             directory.mkdirs(); // Tworzenie folderów, jeśli nie istnieją
         }
 
+        // UWAGA !!! ta sciezka jest w formacie D:\\x\ co powodowało błąd, dalej musi byc zamiana na postać x/y/...
         String filePath = Path.of(uploadDir, multipartFile.getOriginalFilename()).toString();
         try (var fos = new FileOutputStream(filePath)) {
             fos.write(multipartFile.getBytes());
