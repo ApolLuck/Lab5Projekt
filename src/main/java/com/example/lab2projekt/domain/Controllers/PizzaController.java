@@ -50,6 +50,7 @@ public class PizzaController<JBClass> {
         return coverTypeService.findAllCoverTypes();
     }
 
+
     @ModelAttribute("pizzaGenres")
     public List<PizzaGenre> getPizzaGenres() {
         return pizzaGenreService.findAllGenres();
