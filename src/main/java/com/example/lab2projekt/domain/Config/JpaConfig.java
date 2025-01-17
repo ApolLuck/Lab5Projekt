@@ -19,7 +19,6 @@ public class JpaConfig {
 
     @Bean
     public AuditorAware<String> auditorAware() {
-        System.out.println("AuditorAware bean zainicjalizowany");
         return () -> {
             var auth = SecurityContextHolder.getContext().getAuthentication();
             if (auth != null && auth.isAuthenticated()) {

@@ -1,7 +1,6 @@
 package com.example.lab2projekt.domain.Services;
 
 import com.example.lab2projekt.domain.Exceptions.PizzaNotFoundException;
-import com.example.lab2projekt.domain.Exceptions.RESTPizzaNotFoundException;
 import com.example.lab2projekt.domain.Objects.CoverType;
 import com.example.lab2projekt.domain.Objects.Pizza;
 import com.example.lab2projekt.domain.Objects.PizzaFilter;
@@ -49,7 +48,7 @@ public class PizzaService {
     @PreAuthorize("hasRole('ADMIN')")
     public void deletePizza(Integer id) {
         if (!pizzaRepository.existsById(id)) {
-            throw new RESTPizzaNotFoundException("Pizza o id " + id + " nie istnieje");
+            throw new PizzaNotFoundException("Pizza o id " + id + " nie istnieje");
         }
         pizzaRepository.deleteById(id);
     }
