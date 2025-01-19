@@ -5,6 +5,7 @@ import com.example.lab2projekt.domain.Objects.CoverType;
 import com.example.lab2projekt.domain.Objects.Pizza;
 import com.example.lab2projekt.domain.Objects.PizzaFilter;
 import com.example.lab2projekt.domain.Objects.PizzaSpecifications;
+import com.example.lab2projekt.domain.repositories.CoverTypeRepository;
 import com.example.lab2projekt.domain.repositories.PizzaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,9 +21,11 @@ import java.util.Optional;
 public class PizzaService {
 
     private final PizzaRepository pizzaRepository;
+    private final CoverTypeRepository coverTypeRepository;
 
-    public PizzaService(PizzaRepository pizzaRepository) {
+    public PizzaService(PizzaRepository pizzaRepository, CoverTypeRepository coverTypeRepository) {
         this.pizzaRepository = pizzaRepository;
+        this.coverTypeRepository = coverTypeRepository;
     }
 
     // Pobranie wszystkich pizz
@@ -89,4 +92,33 @@ public class PizzaService {
         return pizzaRepository.findByCoverType(coverType);
     }
 
+    public List<Pizza> filterPizzas(String nazwa, Float minCena, Float maxCena, Integer coverTypeId) {
+        List<Pizza> pizzas;
+
+        if (nazwa != null && !nazwa.isEmpty()) {
+            pizzas = pizzaRepository.findByNazwaContainingIgnoreCaseOrSkladnikiContainingIgnoreCase(nazwa, nazwa);
+        }
+        // Filtracja po zakresie cen
+        else if (minCena != null && maxCena != null) {
+            pizzas = pizzaRepository.findByCenaBetween(minCena, maxCena);
+        }
+        // Filtracja po rodzaju opakowania
+        else if (coverTypeId != null) {
+            CoverType coverType = coverTypeRepository.findById(coverTypeId)
+                    .orElse(null);
+            pizzas = pizzaRepository.findByCoverType(coverType);
+        } else {
+            pizzas = pizzaRepository.findAll();
+        }
+
+        return pizzas;
+    }
+
+    public Pizza getPizzaById(Integer pizzaId) throws PizzaNotFoundException {
+        Optional<Pizza> pizzaOptional = pizzaRepository.findById(pizzaId);
+        if (pizzaOptional.isEmpty()) {
+            throw new PizzaNotFoundException("Pizza o id " + pizzaId + " nie została znaleziona");
+        }
+        return pizzaOptional.get();
+    }
 }

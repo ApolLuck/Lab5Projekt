@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
@@ -44,12 +45,10 @@ public class PizzaController<JBClass> {
         this.fileService = fileService;
     }
 
-
     @ModelAttribute("coverTypes")
     public List<CoverType> getCoverTypes() {
         return coverTypeService.findAllCoverTypes();
     }
-
 
     @ModelAttribute("pizzaGenres")
     public List<PizzaGenre> getPizzaGenres() {
@@ -94,8 +93,7 @@ public class PizzaController<JBClass> {
             String pharse,
             Model model) {
 
-        String searchPharse = "%" + pharse + "%";
-        List<Pizza> pizzas = pizzaService.findPizzasByPhrase(searchPharse);
+        List<Pizza> pizzas = pizzaService.findPizzasByPhrase(pharse);
         model.addAttribute("pizzas", pizzas);
         return "pizzaList";
     }
@@ -122,28 +120,12 @@ public class PizzaController<JBClass> {
             @RequestParam(required = false) Integer coverTypeId,
             Model model) {
 
-        List<Pizza> pizzas;
-
-        // Wyszukiwanie po nazwie
-        if (nazwa != null && !nazwa.isEmpty()) {
-            pizzas = pizzaService.findByNazwaContainingIgnoreCaseOrSkladnikiContainingIgnoreCase(nazwa, nazwa);
-        }
-        //Wyszukiwanie po zakresie cen
-        else if (minCena != null && maxCena != null) {
-            pizzas = pizzaService.findByCenaBetween(minCena, maxCena);
-        }
-        //Wyszukiwanie po coverType
-        else if (coverTypeId != null) {
-            CoverType coverType = coverTypeService.findById(coverTypeId)
-                    .orElse(null);
-            pizzas = pizzaService.findByCoverType(coverType);
-        } else {
-            pizzas = pizzaService.findAllPizzas();
-        }
+        List<Pizza> pizzas = pizzaService.filterPizzas(nazwa, minCena, maxCena, coverTypeId);
 
         model.addAttribute("pizzas", pizzas);
         return "pizzaList";
     }
+
 
     //  Wyswietlanie wszystkich pizz
     @GetMapping("/pizzas")
@@ -156,7 +138,6 @@ public class PizzaController<JBClass> {
             }
         });
         model.addAttribute("pizze", pizzas);
-        log.log(Level.DEBUG, "komunikat z metody showPizza");
         return "showMenu";
     }
 
@@ -164,29 +145,18 @@ public class PizzaController<JBClass> {
     @GetMapping("/pizza")
     public ModelAndView pizza(@RequestParam(value = "id") Integer pizzaId) {
         ModelAndView mav = new ModelAndView("showOnePizza");
-        try {
-            Optional<Pizza> onePizza = pizzaService.findPizzaById(pizzaId);
-            if (onePizza.isEmpty()) {
-                throw new PizzaNotFoundException("Pizza o id " + pizzaId + " nie została znaleziona");
-            }
-            onePizza.ifPresent(pizza -> mav.addObject("pizzunia", pizza));
-        } catch (PizzaNotFoundException ex) {
-            throw ex;
-        } catch (JDBCConnectionException ex) {
-            throw ex;
-        } catch (Exception ex) {
-            throw new RuntimeException("Wystąpił nieoczekiwany błąd podczas pobierania pizzy", ex);
-        }
+        Pizza pizza = pizzaService.getPizzaById(pizzaId);
+        mav.addObject("pizzunia", pizza);
         return mav;
     }
-
 
     // Formularz edycji
     @GetMapping("/editPizza")
     public String showForm(Model model, @RequestParam(value = "id", required = false, defaultValue = "-1") Integer pizzaId) {
         Pizza pizza = pizzaService.findPizzaById(pizzaId).orElse(new Pizza());
         model.addAttribute("pizza", pizza);
-        log.log(Level.DEBUG, "komunikat z metody showForm");
+        String formattedDate = pizza.getData_wprowadzenia().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        model.addAttribute("formattedDate", formattedDate);
         return "editForm";
     }
 
@@ -206,7 +176,6 @@ public class PizzaController<JBClass> {
             }
 
             pizzaService.savePizza(pizza);
-            log.log(Level.DEBUG, "komunikat z metody processForm");
         } catch (JDBCConnectionException ex) {
             throw ex;
         } catch (IOException e) {
@@ -219,7 +188,6 @@ public class PizzaController<JBClass> {
     @GetMapping("/addPizza")
     public String showAddPizzaForm(Model model) {
         model.addAttribute("pizza", new Pizza());
-        log.log(Level.DEBUG, "komunikat z metody showAddPizzaForm");
         return "editForm";
     }
 
@@ -229,7 +197,6 @@ public class PizzaController<JBClass> {
             return "editForm";
         }
         pizzaService.savePizza(pizza);
-        log.log(Level.DEBUG, "komunikat z metody AddPizza");
         return "redirect:/pizzas";
     }
 
@@ -254,7 +221,6 @@ public class PizzaController<JBClass> {
             pizza.setFileName(relativeFilePath); // Ustawiamy przetworzoną ścieżkę
             mav.addObject("pizzunia", pizza);
         });
-        log.log(Level.DEBUG, "komunikat z metody pizzaDetails");
         return mav;
     }
 
@@ -263,7 +229,6 @@ public class PizzaController<JBClass> {
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(new CustomPizzaValidator());
         binder.registerCustomEditor(FormatPizzy.class, new PizzaPropertyEditor());
-        log.log(Level.DEBUG, "komunikat z metody initBinder");
     }
 
 }

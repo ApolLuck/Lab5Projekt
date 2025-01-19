@@ -38,7 +38,7 @@
 
     Data wprowadzenia: <br/>
     <input type="date" th:field="*{data_wprowadzenia}"
-           th:value="${#temporals.format(pizza.data_wprowadzenia, 'dd-MM-yyyy')}" />
+           th:value="${formattedDate}" />
     <p th:if="${#fields.hasErrors('data_wprowadzenia')}"
        th:each="err : ${#fields.errors('data_wprowadzenia')}"
        th:text="${err}"></p>

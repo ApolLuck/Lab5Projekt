@@ -60,7 +60,7 @@ public class Pizza {
     private boolean grube_ciasto;
     private boolean dodatkowy_ser;
     @NotNull
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate data_wprowadzenia;
     @NotNull
     @ManyToOne // Pizza może mieć jeden typ opakowania

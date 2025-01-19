@@ -1,31 +1,43 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Strona startowa</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{homepage.title}"></title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link th:href="@{/css/indexStyle.css}" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div sec:authorize="isAuthenticated()" >
-        <p>Witaj, <strong><span sec:authentication="name"></span></strong>!</p>
-        <p>Twoje role:</p>
-        <ul>
-            <li th:each="role: ${#authentication.getAuthorities()}" th:text="${role}"></li>
-        </ul>
+<div class="overlay"></div>
+
+<!-- Treść strony -->
+<div class="content">
+    <!-- Sekcja powitalna -->
+    <div class="container text-center hero-text">
+        <h1 class="display-3" th:text="#{homepage.welcome.title}"></h1>
+        <p class="lead" th:text="#{homepage.welcome.subtitle}"></p>
+        <a th:href="@{/pizzas}" class="btn btn-custom btn-lg mt-3" th:text="#{homepage.button.menu}"></a>
     </div>
-</header>
+</div>
 
-<main>
-    <h1>Witamy w Pizzerii!</h1>
-    <p>
-        <a href="http://localhost:8080/pizzas" class="btn">Przejdź do menu</a>
-    </p>
-</main>
-
-<footer>
-    <p>© 2024 Pizzeria. Wszystkie prawa zastrzeżone.</p>
+<!-- Footer -->
+<footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">
+    <p class="mb-0" th:text="#{homepage.footer}"></p>
+    <div class="language-selection">
+        <a href="?lang=pl">
+            <img src="https://flagcdn.com/w2560/pl.png" alt="Polski" class="flag-icon">
+        </a>
+        <a href="?lang=en">
+            <img src="https://flagcdn.com/w2560/gb.png" alt="English" class="flag-icon">
+        </a>
+    </div>
 </footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script th:src="@{/js/script.js}"></script>
 </body>
 </html>

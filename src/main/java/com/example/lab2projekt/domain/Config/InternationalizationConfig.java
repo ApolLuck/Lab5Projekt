@@ -1,4 +1,4 @@
-package com.example.lab2projekt.config;
+package com.example.lab2projekt.domain.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
