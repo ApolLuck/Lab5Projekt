@@ -29,13 +29,11 @@ public class PizzaService {
     }
 
     // Pobranie wszystkich pizz
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public List<Pizza> findAllPizzas() {
         return pizzaRepository.findAll();
     }
 
     // Pobranie pizzy po ID
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Optional<Pizza> findPizzaById(Integer id) {
         return pizzaRepository.findById(id);
     }
@@ -57,7 +55,7 @@ public class PizzaService {
     }
 
     // Wyszukiwanie pizzy po filtrze
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public List<Pizza> findPizzasByFilter(String pharse, Double cenaOd, Double cenaDo, LocalDate dataOd,LocalDate dataDo) {
         PizzaFilter pizzaFilter = new PizzaFilter(pharse, cenaOd, cenaDo, dataOd, dataDo);
         Specification<Pizza> specification = Specification
@@ -68,25 +66,25 @@ public class PizzaService {
     }
 
     // Wyszukiwanie pizzy po frazie
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public List<Pizza> findPizzasByPhrase(String phrase) {
         String searchPhrase = "%" + phrase + "%";
         return pizzaRepository.findByPhraseInNameOrCoverType(searchPhrase);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public List<Pizza> findByNazwaContainingIgnoreCaseOrSkladnikiContainingIgnoreCase(String nazwa, String nazwa2){
 
         return pizzaRepository.findByNazwaContainingIgnoreCaseOrSkladnikiContainingIgnoreCase(nazwa, nazwa2);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
+//    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public List<Pizza> findByCenaBetween(Float minCena, Float maxCena){
 
         return pizzaRepository.findByCenaBetween(minCena, maxCena);
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
+    //@PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public List<Pizza> findByCoverType(CoverType coverType){
 
         return pizzaRepository.findByCoverType(coverType);
