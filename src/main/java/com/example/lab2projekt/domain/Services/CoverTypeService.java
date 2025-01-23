@@ -16,16 +16,16 @@ public class CoverTypeService {
     public CoverTypeService(CoverTypeRepository coverTypeRepository) {
         this.coverTypeRepository = coverTypeRepository;
     }
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
+   // @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public List<CoverType> findAllCoverTypes() {
         return coverTypeRepository.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+  //  @PreAuthorize("hasRole('ADMIN')")
     public void updateCoverTypeName(String newName, String oldName) {
         coverTypeRepository.updateCoverTypeName(newName, oldName);
     }
-    @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
+   // @PreAuthorize("hasRole('ADMIN') or hasAnyRole('USER')")
     public Optional<CoverType> findById(Integer coverTypeId){
 
         return coverTypeRepository.findById(coverTypeId);

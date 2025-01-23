@@ -16,23 +16,23 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public List<Role> findAllRoles() {
         return roleRepository.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public Role findRoleById(Integer id) {
         return roleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nie znaleziono roli o ID: " + id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public Role saveRole(Role role) {
         return roleRepository.save(role);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deleteRole(Integer id) {
         roleRepository.deleteById(id);
     }

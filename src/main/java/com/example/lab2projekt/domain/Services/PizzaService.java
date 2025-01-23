@@ -39,14 +39,14 @@ public class PizzaService {
     }
 
     // Zapisanie pizzy
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public Pizza savePizza(Pizza pizza) {
         return pizzaRepository.save(pizza);
     }
 
     // Usunięcie pizzy
     @Transactional
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deletePizza(Integer id) {
         if (!pizzaRepository.existsById(id)) {
             throw new PizzaNotFoundException("Pizza o id " + id + " nie istnieje");

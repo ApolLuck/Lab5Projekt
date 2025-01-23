@@ -16,23 +16,23 @@ public class PizzaGenreService {
         this.pizzaGenreRepository = pizzaGenreRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public List<PizzaGenre> findAllGenres() {
         return pizzaGenreRepository.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    //@PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public PizzaGenre findGenreById(Integer id) {
         return pizzaGenreRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Nie znaleziono gatunku o ID: " + id));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public PizzaGenre saveGenre(PizzaGenre genre) {
         return pizzaGenreRepository.save(genre);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deleteGenre(Integer id) {
         pizzaGenreRepository.deleteById(id);
     }
