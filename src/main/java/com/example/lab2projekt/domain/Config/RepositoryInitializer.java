@@ -1,8 +1,8 @@
 package com.example.lab2projekt.domain.Config;
 
-import com.example.lab2projekt.domain.Objects.CoverType;
-import com.example.lab2projekt.domain.Objects.Pizza;
-import com.example.lab2projekt.domain.Objects.PizzaGenre;
+import com.example.lab2projekt.domain.Objects.Entities.CoverType;
+import com.example.lab2projekt.domain.Objects.Entities.Pizza;
+import com.example.lab2projekt.domain.Objects.Entities.PizzaGenre;
 import com.example.lab2projekt.domain.Objects.User.Role;
 import com.example.lab2projekt.domain.Objects.User.AppUser;
 import com.example.lab2projekt.domain.repositories.*;

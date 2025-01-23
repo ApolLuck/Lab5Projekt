@@ -1,4 +1,4 @@
-package com.example.lab2projekt.domain.Objects;
+package com.example.lab2projekt.domain.Objects.Entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

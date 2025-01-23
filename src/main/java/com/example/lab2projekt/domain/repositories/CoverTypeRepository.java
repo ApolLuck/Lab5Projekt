@@ -1,6 +1,6 @@
 package com.example.lab2projekt.domain.repositories;
 
-import com.example.lab2projekt.domain.Objects.CoverType;
+import com.example.lab2projekt.domain.Objects.Entities.CoverType;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

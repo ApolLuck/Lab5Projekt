@@ -1,6 +1,6 @@
 package com.example.lab2projekt.domain.Services;
 
-import com.example.lab2projekt.domain.Objects.CoverType;
+import com.example.lab2projekt.domain.Objects.Entities.CoverType;
 import com.example.lab2projekt.domain.repositories.CoverTypeRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

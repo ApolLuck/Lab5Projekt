@@ -1,5 +1,6 @@
 package com.example.lab2projekt.domain.Objects;
 
+import com.example.lab2projekt.domain.Objects.Entities.Pizza;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 

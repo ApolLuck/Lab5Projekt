@@ -1,14 +1,15 @@
 package com.example.lab2projekt.domain.Controllers;
 
-import com.example.lab2projekt.domain.Exceptions.PizzaNotFoundException;
 import com.example.lab2projekt.domain.Objects.*;
+import com.example.lab2projekt.domain.Objects.Entities.CoverType;
+import com.example.lab2projekt.domain.Objects.Entities.Pizza;
+import com.example.lab2projekt.domain.Objects.Entities.PizzaGenre;
 import com.example.lab2projekt.domain.Services.CoverTypeService;
 import com.example.lab2projekt.domain.Services.FileService;
 import com.example.lab2projekt.domain.Services.PizzaGenreService;
 import com.example.lab2projekt.domain.Services.PizzaService;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.Level;
 import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,7 +26,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @Log4j2

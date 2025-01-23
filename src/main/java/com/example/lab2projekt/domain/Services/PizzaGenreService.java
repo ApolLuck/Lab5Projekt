@@ -1,6 +1,6 @@
 package com.example.lab2projekt.domain.Services;
 
-import com.example.lab2projekt.domain.Objects.PizzaGenre;
+import com.example.lab2projekt.domain.Objects.Entities.PizzaGenre;
 import com.example.lab2projekt.domain.repositories.PizzaGenreRepository;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

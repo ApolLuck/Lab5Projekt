@@ -1,7 +1,7 @@
 package com.example.lab2projekt.domain.repositories;
 
-import com.example.lab2projekt.domain.Objects.CoverType;
-import com.example.lab2projekt.domain.Objects.Pizza;
+import com.example.lab2projekt.domain.Objects.Entities.CoverType;
+import com.example.lab2projekt.domain.Objects.Entities.Pizza;
 import com.example.lab2projekt.domain.Objects.PizzaFilter;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -93,19 +93,20 @@ public class SpringSecurityConfig{
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/"),
                                 mvcMatcherBuilder.pattern("/pizzas"),
+                                mvcMatcherBuilder.pattern("/pizza/**"),
                                 mvcMatcherBuilder.pattern("/Zaloguj"),
                                 mvcMatcherBuilder.pattern("/register"),
                                 mvcMatcherBuilder.pattern("/activate"),
-                                mvcMatcherBuilder.pattern("/polak/**")
+                                mvcMatcherBuilder.pattern("/polak/**"),
+                                mvcMatcherBuilder.pattern("/details"),
+                                mvcMatcherBuilder.pattern("/css/**"),
+                                mvcMatcherBuilder.pattern("/js/**"),
+                                mvcMatcherBuilder.pattern("/images/**")
                         ).permitAll()
-//                        .requestMatchers(
-//                                mvcMatcherBuilder.pattern("/details")   ---> na czas testow
-//                        ).hasRole("USER")
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/editPizza"),
                                 mvcMatcherBuilder.pattern("/deletePizza"),
-                                mvcMatcherBuilder.pattern("/addPizza"),
-                                mvcMatcherBuilder.pattern("/details")   // na czas testow
+                                mvcMatcherBuilder.pattern("/addPizza")
                         ).hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin((form) -> form

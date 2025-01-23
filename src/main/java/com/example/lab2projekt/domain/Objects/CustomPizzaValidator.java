@@ -1,7 +1,7 @@
 package com.example.lab2projekt.domain.Objects;
 
+import com.example.lab2projekt.domain.Objects.Entities.Pizza;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 public class CustomPizzaValidator implements Validator {
