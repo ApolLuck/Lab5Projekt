@@ -30,11 +30,11 @@ import java.util.Set;
 @Table(name = "pizzas")
 public class Pizza {
 
-    public Pizza( String nazwa, String skladniki, Integer srednica, float cena, boolean grube_ciasto,
+    public Pizza(String nazwa, String skladniki, PizzaSize rozmiar, float cena, boolean grube_ciasto,
                  boolean dodatkowy_ser, LocalDate data_wprowadzenia, CoverType coverType) {
         this.nazwa = nazwa;
         this.skladniki = skladniki;
-        this.srednica = srednica;
+        this.rozmiar = rozmiar;
         this.cena = cena;
         this.grube_ciasto = grube_ciasto;
         this.dodatkowy_ser = dodatkowy_ser;
@@ -50,10 +50,9 @@ public class Pizza {
     private String nazwa;
     @NotEmpty
     private String skladniki;
-    @Positive
-    @Min(30) @Max(50)
-    @NumberFormat(pattern = "#")
-    private Integer srednica;
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private PizzaSize rozmiar;
     @Min(30) @Max(100)
     @NumberFormat(pattern = "#.00")
     private float cena;

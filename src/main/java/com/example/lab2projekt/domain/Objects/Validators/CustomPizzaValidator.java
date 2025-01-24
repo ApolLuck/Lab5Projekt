@@ -1,4 +1,4 @@
-package com.example.lab2projekt.domain.Objects;
+package com.example.lab2projekt.domain.Objects.Validators;
 
 import com.example.lab2projekt.domain.Objects.Entities.Pizza;
 import org.springframework.validation.Errors;

@@ -13,7 +13,7 @@
         <li th:text="*{id}"></li>
         <li th:text="*{nazwa}"></li>
         <li th:text="*{skladniki}"></li>
-        <li th:text="*{srednica}"></li>
+        <li th:text="*{getRozmiar}"></li>
         <li th:text="${#numbers.formatDecimal(pizzunia.cena,2,2)} + ' zł'"></li>
         <div th:switch="*{grube_ciasto}">
             <li th:case="false">nie</li>

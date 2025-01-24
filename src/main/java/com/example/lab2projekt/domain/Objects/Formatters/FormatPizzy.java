@@ -1,4 +1,4 @@
-package com.example.lab2projekt.domain.Objects;
+package com.example.lab2projekt.domain.Objects.Formatters;
 
 import lombok.Getter;
 import lombok.Setter;

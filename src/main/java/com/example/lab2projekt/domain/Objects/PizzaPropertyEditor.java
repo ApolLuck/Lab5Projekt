@@ -1,5 +1,7 @@
 package com.example.lab2projekt.domain.Objects;
 
+import com.example.lab2projekt.domain.Objects.Formatters.FormatPizzy;
+
 import java.beans.PropertyEditorSupport;
 
 public class PizzaPropertyEditor extends PropertyEditorSupport {

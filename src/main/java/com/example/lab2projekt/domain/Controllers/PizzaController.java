@@ -4,6 +4,9 @@ import com.example.lab2projekt.domain.Objects.*;
 import com.example.lab2projekt.domain.Objects.Entities.CoverType;
 import com.example.lab2projekt.domain.Objects.Entities.Pizza;
 import com.example.lab2projekt.domain.Objects.Entities.PizzaGenre;
+import com.example.lab2projekt.domain.Objects.Entities.PizzaSize;
+import com.example.lab2projekt.domain.Objects.Formatters.FormatPizzy;
+import com.example.lab2projekt.domain.Objects.Validators.CustomPizzaValidator;
 import com.example.lab2projekt.domain.Services.CoverTypeService;
 import com.example.lab2projekt.domain.Services.FileService;
 import com.example.lab2projekt.domain.Services.PizzaGenreService;
@@ -54,6 +57,12 @@ public class PizzaController<JBClass> {
     public List<PizzaGenre> getPizzaGenres() {
         return pizzaGenreService.findAllGenres();
     }
+
+    @ModelAttribute("pizzaSizes")
+    public List<PizzaSize> getPizzaSizes() {
+        return List.of(PizzaSize.values());
+    }
+   // model.addAttribute("sizes", PizzaSize.values());
 
     @GetMapping("/filteredBySpecification")
     public String filterPizzasBySpecification(
@@ -139,6 +148,19 @@ public class PizzaController<JBClass> {
         });
         model.addAttribute("pizze", pizzas);
         return "showMenu";
+    }
+
+    @GetMapping("/menu")
+    public String showmenu(Model model) {
+        List<Pizza> pizzas = pizzaService.findAllPizzas();
+        pizzas.forEach(pizza -> {
+            if (pizza.getFileContent() != null) {
+                String base64Content = Base64.getEncoder().encodeToString(pizza.getFileContent());
+                pizza.setFileName(base64Content);
+            }
+        });
+        model.addAttribute("pizze", pizzas);
+        return "menu";
     }
 
     // Wyswietlanie pojedynczej pizzy

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="MENU"></title>
+    <!-- Custom CSS -->
+    <link th:href="@{/css/menuStyle.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Górne menu -->
+<div class="navbar">
+    <a th:href="@{/}" class="nav-button">Strona główna</a>
+    <a th:href="@{/menu}" class="nav-button">MENU</a>
+    <a th:href="@{/promotions}" class="nav-button">Promocje</a>
+    <a th:href="@{/gallery}" class="nav-button">Galeria</a>
+</div>
+
+<!-- Lista pizz -->
+<div class="pizza-list">
+    <div th:each="pizza : ${pizze}" class="pizza-item">
+        <h3 th:text="${pizza.id + '. ' + pizza.nazwa}"></h3>
+        <p th:text="${pizza.skladniki}"></p>
+        <button class="choose-button" th:onclick="'showPizzaDetails(' + ${pizza.id} + ');'">Wybierz</button>
+    </div>
+</div>
+
+
+<div class="cart-icon">
+    <span class="cart-count">0</span>
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/shopping-cart.png" alt="Koszyk">
+</div>
+
+<!-- Modal szczegółów pizzy -->
+<div id="pizza-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal();">&times;</span>
+        <h2 th:text="${selectedPizza?.nazwa}"></h2>
+        <p th:text="${selectedPizza?.skladniki}"></p>
+
+<!--        &lt;!&ndash; Rozmiar pizzy &ndash;&gt;-->
+<!--        <h3>Rozmiar pizzy</h3>-->
+<!--        <div th:each="size : ${pizzaSizes}" class="pizza-size">-->
+<!--            <input type="radio" th:field="*{rozmiar}" th:value="${size.name()}" id="size-${size}" />-->
+<!--            <label th:for="size-${size}" th:text="${size.name() + ' ' + size.getSize() + ' cm'}"></label>-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Opakowanie &ndash;&gt;-->
+
+<!--        <h3>Opakowanie</h3>-->
+<!--        <div th:each="cover : ${coverTypes}" class="pizza-cover">-->
+<!--            <input type="radio" th:field="*{coverType}" th:value="${cover.id}" id="cover-${cover.id}" />-->
+<!--            <label th:for="cover-${cover.id}" th:text="${cover.nazwa}"></label>-->
+<!--        </div>-->
+
+        <!-- Ilość -->
+        <h3>Ilość</h3>
+        <div class="quantity-controls">
+            <button onclick="decreaseQuantity();">-</button>
+            <span id="quantity" th:text="${quantity}">1</span>
+            <button onclick="increaseQuantity();">+</button>
+        </div>
+
+        <!-- Dodaj do koszyka -->
+        <button class="add-to-cart" onclick="addToCart();">Dodaj do koszyka</button>
+    </div>
+</div>
+
+<!-- Stopka -->
+<footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">
+    <p class="mb-0" th:text="#{homepage.footer}"></p>
+    <div class="language-selection">
+        <a href="?lang=pl">
+            <img src="https://flagcdn.com/w2560/pl.png" alt="Polski" class="flag-icon">
+        </a>
+        <a href="?lang=en">
+            <img src="https://flagcdn.com/w2560/gb.png" alt="English" class="flag-icon">
+        </a>
+    </div>
+</footer>
+<!-- Custom JS -->
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

@@ -19,12 +19,18 @@
     Składniki: <input type="text" th:field="*{skladniki}"/>
     <p th:if="${#fields.hasErrors('skladniki')}" th:errors="*{skladniki}"></p>
     <br></br>
-    Średnica: <input type="text" th:field="*{srednica}"/>
-    <p th:if="${#fields.hasErrors('srednica')}" th:each="err : ${#fields.errors('srednica')}" th:text="${err}"></p>
-    <br></br>
-    Cena: <input type="text"  th:field="*{cena}"/>
-    <p th:if="${#fields.hasErrors('cena')}" th:each="err : ${#fields.errors('cena')}" th:text="${err}"></p>
-    <br></br>
+
+    Rozmiar:
+    <input type="radio" th:field="*{rozmiar}" value="FAMILIJNA" id="size-familijna" />
+    <label th:for="size-familijna">Familijna (42 cm)</label>
+
+    <input type="radio" th:field="*{rozmiar}" value="DUZA" id="size-duza" />
+    <label th:for="size-duza">Duża (32 cm)</label>
+
+    <input type="radio" th:field="*{rozmiar}" value="MALA" id="size-mala" />
+    <label th:for="size-mala">Mała (26 cm)</label>
+
+    <p th:if="${#fields.hasErrors('rozmiar')}" th:errors="*{rozmiar}"></p>
 
     Grube ciasto: <br/>
     <input type="radio" th:field="*{grube_ciasto}" value="true"/>Tak

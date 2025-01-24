@@ -3,6 +3,7 @@ package com.example.lab2projekt.domain.Config;
 import com.example.lab2projekt.domain.Objects.Entities.CoverType;
 import com.example.lab2projekt.domain.Objects.Entities.Pizza;
 import com.example.lab2projekt.domain.Objects.Entities.PizzaGenre;
+import com.example.lab2projekt.domain.Objects.Entities.PizzaSize;
 import com.example.lab2projekt.domain.Objects.User.Role;
 import com.example.lab2projekt.domain.Objects.User.AppUser;
 import com.example.lab2projekt.domain.repositories.*;
@@ -62,21 +63,21 @@ public class RepositoryInitializer {
                 pizzaGenreRepository.save(pizzaGenre3);
 
                 // Tworzenie pizzy i przypisywanie odpowiednich gatunków
-                Pizza pizza1 = new Pizza("Margherita", "Ser, sos pomidorowy", 31, 33f,
+                Pizza pizza1 = new Pizza("Margherita", "Ser, sos pomidorowy", PizzaSize.MALA, 33f,
                         false, false, LocalDate.now(), coverType1);
                 Set<PizzaGenre> genres1 = new HashSet<>();
                 genres1.add(pizzaGenre1);
                 genres1.add(pizzaGenre2);
                 pizza1.setGenres(genres1);
 
-                Pizza pizza2 = new Pizza("Pepperoni", "Ser, sos pomidorowy, pepperoni", 32,
+                Pizza pizza2 = new Pizza("Pepperoni", "Ser, sos pomidorowy, pepperoni", PizzaSize.DUZA,
                         34f, true, true, LocalDate.now(), coverType2);
                 Set<PizzaGenre> genres2 = new HashSet<>();
                 genres2.add(pizzaGenre1);
                 genres2.add(pizzaGenre3);
                 pizza2.setGenres(genres2);
 
-                Pizza pizza3 = new Pizza("Hawaiian", "Ser, szynka, ananas", 33, 35f,
+                Pizza pizza3 = new Pizza("Hawaiian", "Ser, szynka, ananas", PizzaSize.FAMILIJNA, 35f,
                         false, true, LocalDate.now(), coverType3);
                 Set<PizzaGenre> genres3 = new HashSet<>();
                 genres3.add(pizzaGenre2);

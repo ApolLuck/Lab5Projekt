@@ -93,6 +93,7 @@ public class SpringSecurityConfig{
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/"),
                                 mvcMatcherBuilder.pattern("/pizzas"),
+                                mvcMatcherBuilder.pattern("/menu"),
                                 mvcMatcherBuilder.pattern("/pizza/**"),
                                 mvcMatcherBuilder.pattern("/Zaloguj"),
                                 mvcMatcherBuilder.pattern("/register"),

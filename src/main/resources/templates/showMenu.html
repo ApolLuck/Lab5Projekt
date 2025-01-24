@@ -35,7 +35,7 @@
             <td th:text="*{id}"></td>
             <td th:text="*{nazwa}"></td>
             <td th:text="*{skladniki}"></td>
-            <td th:text="*{srednica}" ></td>
+            <td th:text="*{getRozmiar}" ></td>
             <td th:text="${#numbers.formatDecimal(pizza.cena,2,2)} + ' zł'"></td>
             <div th:switch="*{grube_ciasto}">
                 <td th:case="false">nie</td>
