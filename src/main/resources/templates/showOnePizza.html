@@ -28,9 +28,12 @@
         <li>
             <span th:each="genre : *{genres}" th:text="${genre.name} + ','" />
         </li>
-        <img th:if="${pizzunia.fileName != null}"
-             th:src="@{'/upload/' + ${pizzunia.fileName}}"
-             alt="${pizzunia.fileName}" />
+        <li>
+            <img th:if="(*{fileName} != null)"
+                 th:src="'data:image/jpg;base64,' + *{fileName}"
+                 alt="Obraz pizzy" style="max-width: 100px; max-height: 100px;" />
+        </li>
+
     </ul>
 </div>
 <br>

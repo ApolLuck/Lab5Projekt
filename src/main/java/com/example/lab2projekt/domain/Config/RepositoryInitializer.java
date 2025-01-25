@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -70,6 +72,10 @@ public class RepositoryInitializer {
                 genres1.add(pizzaGenre2);
                 pizza1.setGenres(genres1);
 
+                pizza1.setFileName("margharita.jpg");
+                byte[] fileContent = Files.readAllBytes(Paths.get("D:/polak/pizza/1/margharita.jpg"));
+                pizza1.setFileContent(fileContent);
+
                 Pizza pizza2 = new Pizza("Pepperoni", "Ser, sos pomidorowy, pepperoni", PizzaSize.DUZA,
                         34f, true, true, LocalDate.now(), coverType2);
                 Set<PizzaGenre> genres2 = new HashSet<>();
@@ -77,11 +83,20 @@ public class RepositoryInitializer {
                 genres2.add(pizzaGenre3);
                 pizza2.setGenres(genres2);
 
+                pizza2.setFileName("pepperoni.jpg");
+                byte[] fileContent2 = Files.readAllBytes(Paths.get("D:/polak/pizza/2/pepperoni.jpg"));
+                pizza2.setFileContent(fileContent2);
+
                 Pizza pizza3 = new Pizza("Hawaiian", "Ser, szynka, ananas", PizzaSize.FAMILIJNA, 35f,
                         false, true, LocalDate.now(), coverType3);
                 Set<PizzaGenre> genres3 = new HashSet<>();
                 genres3.add(pizzaGenre2);
                 pizza3.setGenres(genres3);
+
+
+                pizza3.setFileName("pizza-hawajska.jpg");
+                byte[] fileContent3 = Files.readAllBytes(Paths.get("D:/polak/pizza/3/pizza-hawajska.jpg"));
+                pizza3.setFileContent(fileContent3);
 
                 pizzaRepository.save(pizza1);
                 pizzaRepository.save(pizza2);

@@ -191,10 +191,10 @@ public class PizzaController<JBClass> {
                 return "editForm";
             }
             if(!multipartFile.isEmpty()) {//to powinno być w usłudze
-//                pizza.setFileName(multipartFile.getOriginalFilename());    wersja z BD w h2
+                pizza.setFileName(multipartFile.getOriginalFilename());    //wersja z BD w h2
                 pizza.setFileContent(multipartFile.getBytes());           // wersja z BD w h2
-                String savedFilePath = fileService.saveFile(multipartFile, "pizza", pizza.getId().toString());
-                pizza.setFileName(savedFilePath); // Zapisujemy ścieżkę w encji
+                //String savedFilePath = fileService.saveFile(multipartFile, "pizza", pizza.getId().toString());
+               // pizza.setFileName(savedFilePath); // Zapisujemy ścieżkę w encji
             }
 
             pizzaService.savePizza(pizza);
@@ -238,9 +238,10 @@ public class PizzaController<JBClass> {
         ModelAndView mav = new ModelAndView("showOnePizza");
         pizzaService.findPizzaById(pizzaId).ifPresent(pizza -> {
             // Zastąp odwrotne ukośniki na normalne ukośniki
-            String normalizedFileName = pizza.getFileName().replace("\\", "/");
-            String relativeFilePath = normalizedFileName.replace("D:/polak/pizza/", ""); // Usuwamy początkową część ścieżki
-            pizza.setFileName(relativeFilePath); // Ustawiamy przetworzoną ścieżkę
+            if (pizza.getFileContent() != null) {
+                String base64Content = Base64.getEncoder().encodeToString(pizza.getFileContent());
+                pizza.setFileName(base64Content); // Tymczasowe pole na zakodowany obraz
+            }
             mav.addObject("pizzunia", pizza);
         });
         return mav;
