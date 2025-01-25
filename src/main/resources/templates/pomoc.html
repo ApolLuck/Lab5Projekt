@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+>
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Edit form</title>
+</head>
+<body>
+<h1>Pizza Info</h1>
+
+<form th:method="POST" th:object="${pizza}" th:action="@{/updatePizza}" enctype="multipart/form-data">
+    id: <input type="text" th:field="*{id}" readonly/>
+    <br></br>
+    nazwa: <input type="text" th:field="*{nazwa}"/>
+    <p th:if="${#fields.hasErrors('nazwa')}" th:errors="*{nazwa}"></p>
+    <br></br>
+    Składniki: <input type="text" th:field="*{skladniki}"/>
+    <p th:if="${#fields.hasErrors('skladniki')}" th:errors="*{skladniki}"></p>
+    <br></br>
+
+    Rozmiar:
+    <input type="radio" th:field="*{rozmiar}" value="FAMILIJNA" id="size-familijna" />
+    <label th:for="size-familijna">Familijna (42 cm)</label>
+
+    <input type="radio" th:field="*{rozmiar}" value="DUZA" id="size-duza" />
+    <label th:for="size-duza">Duża (32 cm)</label>
+
+    <input type="radio" th:field="*{rozmiar}" value="MALA" id="size-mala" />
+    <label th:for="size-mala">Mała (26 cm)</label>
+
+    <p th:if="${#fields.hasErrors('rozmiar')}" th:errors="*{rozmiar}"></p>
+    <br>
+
+    <br>
+    Cena: <input type="text"  th:field="*{cena}"/>
+    <p th:if="${#fields.hasErrors('cena')}" th:each="err : ${#fields.errors('cena')}" th:text="${err}"></p>
+    <br></br>
+
+    Grube ciasto: <br/>
+    <input type="radio" th:field="*{grube_ciasto}" value="true"/>Tak
+    <input type="radio" th:field="*{grube_ciasto}" value="false"/>Nie
+    <br/>
+
+    Dodatkowy ser: <br/>
+    <input type="radio" th:field="*{dodatkowy_ser}" value="true"/>Tak
+    <input type="radio" th:field="*{dodatkowy_ser}" value="false"/>Nie
+    <br/>
+
+    Data wprowadzenia: <br/>
+    <input type="date" th:field="*{data_wprowadzenia}"
+           th:value="${formattedDate}" />
+    <p th:if="${#fields.hasErrors('data_wprowadzenia')}"
+       th:each="err : ${#fields.errors('data_wprowadzenia')}"
+       th:text="${err}"></p>
+    <br/>
+
+
+    Wybierz opakowanie <br/>
+    <tr th:each="cover : ${coverTypes}">
+        <td>
+            <input type="radio" th:field="*{coverType}" th:value="${cover.id}" id="cover-${cover.id}"/>
+            <label th:for="'cover-' + ${cover.id}" th:text="${cover.nazwa}"></label>
+        </td>
+    </tr>
+    <div th:if="${#fields.hasErrors('coverType')}" th:errors="*{coverType}"></div>
+
+    <br/>
+    Wybierz dziedzinę: <br/>
+    <tr th:each="genre : ${pizzaGenres}">
+        <td>
+            <input type="checkbox" th:field="*{genres}" th:value="${genre.id}" id="genre-${genre.id}"/>
+            <label th:for="'genre-' + ${genre.id}" th:text="${genre.name}"></label>
+        </td>
+    </tr>
+    <br/>
+    <div th:if="${#fields.hasErrors('genres')}" th:errors="*{genres}"></div>
+
+    Dodaj zdjęcie pizzy: <br/>
+    <div>
+        <input type="file" id="file" name="multipartFile" accept=".gif,.png,.jpeg,.jpg">
+    </div>
+
+    <br></br>
+    <input type="submit" value="Zapisz zmiany"/>
+</form>
+
+<br>
+<a th:href="@{/}">Powrót do strony głównej</a>
+</br>
+</body>
+</html>

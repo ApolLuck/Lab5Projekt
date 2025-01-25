@@ -246,6 +246,12 @@ public class PizzaController<JBClass> {
         return mav;
     }
 
+    @GetMapping("/addPizzaToBasket")
+    public String addPizzaToBasket(Model model, @RequestParam(value = "id", required = false, defaultValue = "-1") Integer pizzaId) {
+        Pizza pizza = pizzaService.findPizzaById(pizzaId).orElse(new Pizza());
+        model.addAttribute("pizza", pizza);
+        return "choosenPizza";
+    }
 
     @InitBinder("pizza")
     public void initBinder(WebDataBinder binder) {

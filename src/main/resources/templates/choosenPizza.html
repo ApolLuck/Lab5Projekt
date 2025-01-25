@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="Pizza"></title>
+    <!-- Custom CSS -->
+    <link th:href="@{/css/choosenPizza.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Górne menu -->
+<div class="navbar">
+    <a th:href="@{/}" class="nav-button">Strona główna</a>
+    <a th:href="@{/menu}" class="nav-button">MENU</a>
+    <a th:href="@{/promotions}" class="nav-button">Promocje</a>
+    <a th:href="@{/gallery}" class="nav-button">Galeria</a>
+    <a th:href="@{/basket}" class="nav-button">Koszyk</a>
+</div>
+
+<form th:method="POST" th:object="${pizza}" th:action="@{/updatePizza}" enctype="multipart/form-data">
+    <div class="form-row">
+        <div class="info-label">
+            <span class="info-value" th:text="*{id}"></span>
+        </div>
+        <div class="info-label">
+            <span class="info-value" th:text="*{nazwa}"></span>
+        </div>
+        <div class="info-label">
+            <span class="info-value" th:text="*{skladniki}"></span>
+        </div>
+    </div>
+
+    <div class="radio-group">
+        Rozmiar:
+        <input type="radio" th:field="*{rozmiar}" value="FAMILIJNA" id="size-familijna" />
+        <label th:for="size-familijna">Familijna (42 cm)</label>
+
+        <input type="radio" th:field="*{rozmiar}" value="DUZA" id="size-duza" />
+        <label th:for="size-duza">Duża (32 cm)</label>
+
+        <input type="radio" th:field="*{rozmiar}" value="MALA" id="size-mala" />
+        <label th:for="size-mala">Mała (26 cm)</label>
+
+        <p th:if="${#fields.hasErrors('rozmiar')}" th:errors="*{rozmiar}"></p>
+        <br><br>
+    </div>
+
+    <div class="form-row">
+        <div class="info-label">
+            <span class="info-value" th:text="'Cena podstawowa [zł]'"></span>
+        </div>
+        <div class="info-label">
+            <span class="info-value" th:text="*{cena}"></span>
+        </div>
+    </div>
+
+    Grube ciasto (5.00 zł): <br>
+    <input type="radio" th:field="*{grube_ciasto}" value="true"/>Tak
+    <input type="radio" th:field="*{grube_ciasto}" value="false"/>Nie
+    <br>
+
+    Dodatkowy ser (5.00 zł): <br>
+    <input type="radio" th:field="*{dodatkowy_ser}" value="true"/>Tak
+    <input type="radio" th:field="*{dodatkowy_ser}" value="false"/>Nie
+    <br>
+
+    <div class="radio-group">
+        Wybierz opakowanie (Eko/Premium 5.00 zł): <br>
+        <tr th:each="cover : ${coverTypes}">
+            <td>
+                <input type="radio" th:field="*{coverType}" th:value="${cover.id}" id="cover-${cover.id}"/>
+                <label th:for="'cover-' + ${cover.id}" th:text="${cover.nazwa}"></label>
+            </td>
+        </tr>
+        <div th:if="${#fields.hasErrors('coverType')}" th:errors="*{coverType}"></div>
+        <br><br>
+    </div>
+    <div class="value-button" id="decrease" onclick="decreaseValue()">-</div>
+    <input type="number" id="number" value="1" />
+    <div class="value-button" id="increase" onclick="increaseValue()">+</div>
+    <br>
+    <span id="order-value">Wartość zamówienia: 0 zł</span>
+    <br><br>
+
+    <input type="submit" value="Dodaj do koszyka"/>
+</form>
+<br>
+<div class="cart-icon">
+    <span class="cart-count">0</span>
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/shopping-cart.png" alt="Koszyk">
+</div>
+<!-- Stopka -->
+<footer>
+    <p th:text="#{homepage.footer}"></p>
+    <div class="language-selection">
+        <a href="?lang=pl">
+            <img src="https://flagcdn.com/w2560/pl.png" alt="Polski" class="flag-icon">
+        </a>
+        <a href="?lang=en">
+            <img src="https://flagcdn.com/w2560/gb.png" alt="English" class="flag-icon">
+        </a>
+    </div>
+</footer>
+<!-- Custom JS -->
+<script th:src="@{/css/js/script.js}"></script>
+</body>
+</html>

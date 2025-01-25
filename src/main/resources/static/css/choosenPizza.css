@@ -1,0 +1,303 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #a52a2a;
+    padding: 10px;
+}
+
+.nav-button {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
+.choose-button {
+    text-decoration: none;
+    background-color: #a52a2a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* Ogólny styl strony */
+body {
+    background-image: url('https://www.mojegotowanie.pl/media/cache/big/uploads/media/recipe/0002/71/pizza-pepperoni.jpg');
+    background-size: cover;
+    background-position: center;
+    color: black;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.content {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-text {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.btn-custom {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #e63e00;
+    color: #fff;
+}
+
+/* Stopka */
+footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #222;
+    color: white;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Flagi */
+.language-selection a {
+    margin-left: 10px;
+}
+
+.flag-icon {
+    width: 30px;
+    height: 20px;
+    display: inline-block;
+}
+
+.cart-icon {
+    position: fixed;
+    top: 50%; /* Pozycjonuje koszyk w połowie wysokości okna */
+    right: 20px; /* Odległość od prawej krawędzi */
+    transform: translateY(-50%); /* Przesunięcie na środek */
+    background-color: #a52a2a;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 50px; /* Szerokość koszyka */
+    height: 50px; /* Wysokość koszyka */
+    z-index: 100; /* Zapobiega nachodzeniu przez inne elementy */
+}
+
+.cart-icon img {
+    width: 25px;
+    height: 25px;
+}
+
+.cart-count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff4500;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
+/* Stylizacja formularza */
+form {
+    background-color: #fff;
+    padding: 15px; /* Mniejszy padding dla niższego wyglądu */
+    border-radius: 10px;
+    max-width: 900px; /* Szerokość formularza - zwiększona */
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+form .radio-group {
+    display: flex; /* Ustawienie elementów w jednej linii */
+    flex-wrap: wrap; /* Zezwolenie na zawijanie, jeśli nie mieszczą się w jednej linii */
+    gap: 10px; /* Odstępy między przyciskami */
+    align-items: center; /* Wyrównanie przycisków radiowych w pionie */
+}
+
+form .radio-group label {
+    display: flex; /* Ustawienie etykiety i przycisku razem */
+    align-items: center;
+    margin-right: 10px; /* Odstęp między etykietami */
+}
+
+form input[type="text"],
+form select {
+    width: 95%; /* Elementy rozciągnięte na prawie całą szerokość */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+form input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+form label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+form input[type="submit"] {
+    background-color: #a52a2a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%; /* Przycisk dopasowany do szerokości formularza */
+}
+
+form input[type="submit"]:hover {
+    background-color: #d04141;
+}
+
+form p {
+    color: red;
+    font-size: 14px;
+}
+
+form .form-section {
+    margin-bottom: 15px; /* Zmniejszony odstęp między sekcjami */
+}
+
+/* Styl linku powrotu */
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #a52a2a;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #d04141;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    form {
+        padding: 10px; /* Dostosowanie paddingu do mniejszych ekranów */
+        max-width: 100%; /* Formularz zajmuje całą szerokość na małych ekranach */
+    }
+
+    form input[type="submit"] {
+        font-size: 16px;
+    }
+}
+
+/* Wyświetlanie ID i nazwy obok siebie */
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 800px;
+    font-family: Arial, sans-serif;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.info-value {
+    font-weight: normal;
+    color: #555;
+}
+
+.value-button {
+    display: inline-block;
+    border: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 11px 0;
+    background: #eee;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.value-button:hover {
+    cursor: pointer;
+}
+
+form #decrease {
+    margin-right: -4px;
+    border-radius: 8px 0 0 8px;
+}
+
+form #increase {
+    margin-left: -4px;
+    border-radius: 0 8px 8px 0;
+}
+
+form #input-wrap {
+    margin: 0px;
+    padding: 0px;
+}
+
+input#number {
+    text-align: center;
+    border: none;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin: 0px;
+    width: 40px;
+    height: 40px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
