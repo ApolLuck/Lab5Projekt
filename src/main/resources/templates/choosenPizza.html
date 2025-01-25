@@ -11,7 +11,7 @@
 <!-- Górne menu -->
 <div class="navbar">
     <a th:href="@{/}" class="nav-button">Strona główna</a>
-    <a th:href="@{/menu}" class="nav-button">MENU</a>
+    <a th:href="@{/menu}" class="nav-button">Menu</a>
     <a th:href="@{/promotions}" class="nav-button">Promocje</a>
     <a th:href="@{/gallery}" class="nav-button">Galeria</a>
     <a th:href="@{/basket}" class="nav-button">Koszyk</a>
@@ -32,13 +32,13 @@
 
     <div class="radio-group">
         Rozmiar:
-        <input type="radio" th:field="*{rozmiar}" value="FAMILIJNA" id="size-familijna" />
+        <input type="radio" th:field="*{rozmiar}" value="FAMILIJNA" id="size-familijna" onclick="calculateOrderValue()" />
         <label th:for="size-familijna">Familijna (42 cm)</label>
 
-        <input type="radio" th:field="*{rozmiar}" value="DUZA" id="size-duza" />
+        <input type="radio" th:field="*{rozmiar}" value="DUZA" id="size-duza" onclick="calculateOrderValue()" />
         <label th:for="size-duza">Duża (32 cm)</label>
 
-        <input type="radio" th:field="*{rozmiar}" value="MALA" id="size-mala" />
+        <input type="radio" th:field="*{rozmiar}" value="MALA" id="size-mala" onclick="calculateOrderValue()" />
         <label th:for="size-mala">Mała (26 cm)</label>
 
         <p th:if="${#fields.hasErrors('rozmiar')}" th:errors="*{rozmiar}"></p>
@@ -47,28 +47,28 @@
 
     <div class="form-row">
         <div class="info-label">
-            <span class="info-value" th:text="'Cena podstawowa [zł]'"></span>
+            <span class="info-value" th:text="'Cena podstawowa (zł)'"></span>
         </div>
         <div class="info-label">
-            <span class="info-value" th:text="*{cena}"></span>
+            <span id="base-price" class="info-value" th:text="*{cena}"></span>
         </div>
     </div>
 
     Grube ciasto (5.00 zł): <br>
-    <input type="radio" th:field="*{grube_ciasto}" value="true"/>Tak
-    <input type="radio" th:field="*{grube_ciasto}" value="false"/>Nie
+    <input type="radio" th:field="*{grube_ciasto}" value="true" onclick="calculateOrderValue()" />Tak
+    <input type="radio" th:field="*{grube_ciasto}" value="false" onclick="calculateOrderValue()" />Nie
     <br>
 
     Dodatkowy ser (5.00 zł): <br>
-    <input type="radio" th:field="*{dodatkowy_ser}" value="true"/>Tak
-    <input type="radio" th:field="*{dodatkowy_ser}" value="false"/>Nie
+    <input type="radio" th:field="*{dodatkowy_ser}" value="true" onclick="calculateOrderValue()" />Tak
+    <input type="radio" th:field="*{dodatkowy_ser}" value="false" onclick="calculateOrderValue()" />Nie
     <br>
 
     <div class="radio-group">
         Wybierz opakowanie (Eko/Premium 5.00 zł): <br>
         <tr th:each="cover : ${coverTypes}">
             <td>
-                <input type="radio" th:field="*{coverType}" th:value="${cover.id}" id="cover-${cover.id}"/>
+                <input type="radio" th:field="*{coverType}" th:value="${cover.id}" id="cover-${cover.id}" onclick="calculateOrderValue()" />
                 <label th:for="'cover-' + ${cover.id}" th:text="${cover.nazwa}"></label>
             </td>
         </tr>
@@ -76,7 +76,7 @@
         <br><br>
     </div>
     <div class="value-button" id="decrease" onclick="decreaseValue()">-</div>
-    <input type="number" id="number" value="1" />
+    <input type="number" id="number" value="1" onchange="calculateOrderValue()" />
     <div class="value-button" id="increase" onclick="increaseValue()">+</div>
     <br>
     <span id="order-value">Wartość zamówienia: 0 zł</span>
