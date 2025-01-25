@@ -31,6 +31,12 @@
     <label th:for="size-mala">Mała (26 cm)</label>
 
     <p th:if="${#fields.hasErrors('rozmiar')}" th:errors="*{rozmiar}"></p>
+    <br>
+
+    <br>
+    Cena: <input type="text"  th:field="*{cena}"/>
+    <p th:if="${#fields.hasErrors('cena')}" th:each="err : ${#fields.errors('cena')}" th:text="${err}"></p>
+    <br></br>
 
     Grube ciasto: <br/>
     <input type="radio" th:field="*{grube_ciasto}" value="true"/>Tak
