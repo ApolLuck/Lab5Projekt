@@ -17,7 +17,7 @@
     <a th:href="@{/basket}" class="nav-button">Koszyk</a>
 </div>
 
-<form th:method="POST" th:object="${pizza}" th:action="@{/updatePizza}" enctype="multipart/form-data">
+<form th:method="POST" th:object="${pizza}" th:action="@{/basket}">
     <div class="form-row">
         <div class="info-label">
             <span class="info-value" th:text="*{id}"></span>
@@ -29,6 +29,8 @@
             <span class="info-value" th:text="*{skladniki}"></span>
         </div>
     </div>
+
+    <input type="hidden" name="pizzaID" th:value="*{id}" />
 
     <div class="radio-group">
         Rozmiar:
@@ -74,10 +76,11 @@
         <br><br>
     </div>
     <div class="value-button" id="decrease" onclick="decreaseValue(), calculateOrderValue()">-</div>
-    <input type="number" id="number" value="1" onchange="calculateOrderValue()" />
+    <input type="number" id="number" value="1" name="quantity" onchange="calculateOrderValue()" />
     <div class="value-button" id="increase" onclick="increaseValue(), calculateOrderValue()">+</div>
     <br>
     <span id="order-value">Wartość zamówienia: 0 zł</span>
+    <input type="hidden" id="hidden-order-value" name="orderValue" value="0" />
     <br><br>
 
     <input type="submit" value="Dodaj do koszyka"/>

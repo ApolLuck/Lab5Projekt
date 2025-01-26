@@ -34,4 +34,5 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order; // Relacja Many-to-One z Order
+
 }

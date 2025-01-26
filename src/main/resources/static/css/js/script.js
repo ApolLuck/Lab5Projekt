@@ -21,6 +21,18 @@ document.getElementById('number').addEventListener('input', function () {
     }
 });
 
+function updateHiddenOrderValue() {
+    // Pobierz wartość zamówienia z <span>
+    const orderValueElement = document.getElementById("order-value");
+    const hiddenOrderValueInput = document.getElementById("hidden-order-value");
+
+    // Usuń tekst "Wartość zamówienia: " i " zł", aby pobrać tylko liczbę
+    const rawValue = orderValueElement.textContent.replace("Wartość zamówienia: ", "").replace(" zł", "").trim();
+
+    // Ustaw wartość ukrytego pola
+    hiddenOrderValueInput.value = parseFloat(rawValue) || 0;
+}
+
 function calculateOrderValue() {
     var basePrice = parseFloat(document.getElementById('base-price').textContent);
     var orderValue = basePrice;
@@ -54,4 +66,7 @@ function calculateOrderValue() {
 
     document.getElementById('order-value').textContent = 'Wartość zamówienia: '
         + orderValue.toFixed(2) + ' zł';
+
+    updateHiddenOrderValue()
+
 }

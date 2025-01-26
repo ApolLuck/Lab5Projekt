@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -33,15 +34,17 @@ public class PizzaController<JBClass> {
     private final PizzaGenreService pizzaGenreService;
     private final FileService fileService;
     private final PromotionService promotionService;
+    private final OrderItemService orderItemService;
 
     @Autowired
     public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService,
-                           FileService fileService, PromotionService promotionService) {
+                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService) {
         this.pizzaService = pizzaService;
         this.coverTypeService = coverTypeService;
         this.pizzaGenreService = pizzaGenreService;
         this.fileService = fileService;
         this.promotionService = promotionService;
+        this.orderItemService = orderItemService;
     }
 
     @ModelAttribute("coverTypes")
@@ -180,6 +183,36 @@ public class PizzaController<JBClass> {
         List<Promotion> promotions = promotionService.findAllPromotions();
         model.addAttribute("promocje", promotions);
         return "promotions";
+    }
+
+    // wyswietlanie koszyka dla klienta
+    @GetMapping("/basket")
+    public String showBasket(Model model) {
+        List<OrderItem> orderItems = orderItemService.findAllOrderItems();
+        model.addAttribute("orderItems", orderItems);
+        return "basket";
+    }
+
+    @PostMapping("/basket")
+    public String addToBasket(@RequestParam(value = "pizzaID", required = false) Integer pizzaId ,
+                              @RequestParam(value = "quantity", required = false) Integer quantity,
+                              @RequestParam(value = "orderValue", required = false) BigDecimal orderValue,
+                              Model model) {
+
+        if (!(quantity ==null)){
+            orderItemService.createOrderItem(quantity, orderValue, pizzaId);
+        }
+
+        List<OrderItem> orderItems = orderItemService.findAllOrderItems();
+
+        //pizzaService.savePizza(pizza);
+        model.addAttribute("id", pizzaId);
+        model.addAttribute("quantity", quantity);
+        model.addAttribute("orderValue", orderValue);
+
+        model.addAttribute("orderItems", orderItems);
+
+        return "basket";
     }
 
 
