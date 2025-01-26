@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="MENU"></title>
+    <!-- Custom CSS -->
+    <link th:href="@{/css/menuStyle.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Górne menu -->
+<div class="navbar">
+    <a th:href="@{/}" class="nav-button">Strona główna</a>
+    <a th:href="@{/menu}" class="nav-button">Menu</a>
+    <a th:href="@{/promotions}" class="nav-button">Promocje</a>
+    <a th:href="@{/gallery}" class="nav-button">Galeria</a>
+    <a th:href="@{/basket}" class="nav-button">Koszyk</a>
+</div>
+
+<!-- Lista pizz -->
+<div class="pizza-list">
+    <div th:each="pizza : ${pizze}" class="pizza-item">
+        <h3 th:text="${pizza.id + '. ' + pizza.nazwa}"></h3>
+        <p th:text="${pizza.skladniki}"></p>
+        <img th:if="${pizza.fileName != null}"
+             th:src="'data:image/jpg;base64,' + ${pizza.fileName}"
+             alt="Obraz pizzy" style="max-width: 200px; max-height: 200px;" />
+    </div>
+</div>
+
+<div class="cart-icon">
+    <span class="cart-count">0</span>
+    <img src="https://img.icons8.com/ios-filled/50/ffffff/shopping-cart.png" alt="Koszyk">
+</div>
+
+<div id="cart-modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeCart();">&times;</span>
+        <h2>Koszyk</h2>
+        <ul id="cart-list"></ul>
+        <button onclick="continueShopping();">Kontynuuj zakupy</button>
+    </div>
+</div>
+
+<!-- Stopka -->
+<footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">
+    <p class="mb-0" th:text="#{homepage.footer}"></p>
+    <div class="language-selection">
+        <a href="?lang=pl">
+            <img src="https://flagcdn.com/w2560/pl.png" alt="Polski" class="flag-icon">
+        </a>
+        <a href="?lang=en">
+            <img src="https://flagcdn.com/w2560/gb.png" alt="English" class="flag-icon">
+        </a>
+    </div>
+</footer>
+<!-- Custom JS -->
+<script th:src="@{/css/js/script.js}"></script>
+</body>
+</html>

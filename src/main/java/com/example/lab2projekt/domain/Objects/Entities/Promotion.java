@@ -35,4 +35,14 @@ public class Promotion {
     )
     private Set<Pizza> pizzas;
 
+    public Promotion(String title, String description, Double discountPercentage,
+                     LocalDate validFrom, LocalDate validTo, Set<Pizza> pizzas) {
+        this.title = title;
+        this.description = description;
+        this.discountPercentage = discountPercentage;
+        this.validFrom = validFrom;
+        this.validTo = validTo;
+        this.pizzas = pizzas;
+    }
+
 }

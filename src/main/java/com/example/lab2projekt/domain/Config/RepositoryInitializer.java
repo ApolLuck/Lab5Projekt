@@ -1,9 +1,6 @@
 package com.example.lab2projekt.domain.Config;
 
-import com.example.lab2projekt.domain.Objects.Entities.CoverType;
-import com.example.lab2projekt.domain.Objects.Entities.Pizza;
-import com.example.lab2projekt.domain.Objects.Entities.PizzaGenre;
-import com.example.lab2projekt.domain.Objects.Entities.PizzaSize;
+import com.example.lab2projekt.domain.Objects.Entities.*;
 import com.example.lab2projekt.domain.Objects.User.Role;
 import com.example.lab2projekt.domain.Objects.User.AppUser;
 import com.example.lab2projekt.domain.repositories.*;
@@ -27,17 +24,20 @@ public class RepositoryInitializer {
     private  RoleRepository roleRepository;
     private  UserRepository userRepository;
     private  PasswordEncoder passwordEncoder;
+    private PromotionRepository promotionRepository;
 
     @Autowired
     public void setPizzaRepository(PizzaRepository pizzaRepository, CoverTypeRepository coverTypeRepository,
                                    PizzaGenreRepository pizzaGenreRepository, RoleRepository roleRepository,
-                                   UserRepository userRepository, PasswordEncoder passwordEncoder) {
+                                   UserRepository userRepository, PasswordEncoder passwordEncoder,
+                                   PromotionRepository promotionRepository) {
         this.pizzaRepository = pizzaRepository;
         this.coverTypeRepository = coverTypeRepository;
         this.pizzaGenreRepository = pizzaGenreRepository;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.promotionRepository = promotionRepository;
     }
 
     @Bean
@@ -93,7 +93,6 @@ public class RepositoryInitializer {
                 genres3.add(pizzaGenre2);
                 pizza3.setGenres(genres3);
 
-
                 pizza3.setFileName("pizza-hawajska.jpg");
                 byte[] fileContent3 = Files.readAllBytes(Paths.get("D:/polak/pizza/3/pizza-hawajska.jpg"));
                 pizza3.setFileContent(fileContent3);
@@ -101,6 +100,16 @@ public class RepositoryInitializer {
                 pizzaRepository.save(pizza1);
                 pizzaRepository.save(pizza2);
                 pizzaRepository.save(pizza3);
+
+                if (promotionRepository.findAll().isEmpty()) {
+                    Set<Pizza> pizzasPromoHawaian = new HashSet<>();
+                    pizzasPromoHawaian.add(pizza3);
+                    Promotion hawaianWeekPromo = new Promotion("Hawaian Week","Każda pizza hawajska 30% taniej!"
+                            ,30.0, LocalDate.now(),LocalDate.of(2025,2,28),pizzasPromoHawaian);
+
+                    promotionRepository.save(hawaianWeekPromo);
+                }
+
             }
             if (roleRepository.findAll().isEmpty()) {
                 Role roleUser = new Role(Role.Types.ROLE_USER);
@@ -124,6 +133,8 @@ public class RepositoryInitializer {
                 userRepository.save(admin);
                 userRepository.save(test);
             }
+
+
         };
     }
 }

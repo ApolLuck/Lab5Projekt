@@ -1,16 +1,10 @@
 package com.example.lab2projekt.domain.Controllers;
 
 import com.example.lab2projekt.domain.Objects.*;
-import com.example.lab2projekt.domain.Objects.Entities.CoverType;
-import com.example.lab2projekt.domain.Objects.Entities.Pizza;
-import com.example.lab2projekt.domain.Objects.Entities.PizzaGenre;
-import com.example.lab2projekt.domain.Objects.Entities.PizzaSize;
+import com.example.lab2projekt.domain.Objects.Entities.*;
 import com.example.lab2projekt.domain.Objects.Formatters.FormatPizzy;
 import com.example.lab2projekt.domain.Objects.Validators.CustomPizzaValidator;
-import com.example.lab2projekt.domain.Services.CoverTypeService;
-import com.example.lab2projekt.domain.Services.FileService;
-import com.example.lab2projekt.domain.Services.PizzaGenreService;
-import com.example.lab2projekt.domain.Services.PizzaService;
+import com.example.lab2projekt.domain.Services.*;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.exception.JDBCConnectionException;
@@ -38,14 +32,16 @@ public class PizzaController<JBClass> {
     private final CoverTypeService coverTypeService;
     private final PizzaGenreService pizzaGenreService;
     private final FileService fileService;
+    private final PromotionService promotionService;
 
     @Autowired
     public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService,
-    FileService fileService) {
+                           FileService fileService, PromotionService promotionService) {
         this.pizzaService = pizzaService;
         this.coverTypeService = coverTypeService;
         this.pizzaGenreService = pizzaGenreService;
         this.fileService = fileService;
+        this.promotionService = promotionService;
     }
 
     @ModelAttribute("coverTypes")
@@ -150,6 +146,7 @@ public class PizzaController<JBClass> {
         return "showMenu";
     }
 
+    //wyswietlanie menu klienta
     @GetMapping("/menu")
     public String showmenu(Model model) {
         List<Pizza> pizzas = pizzaService.findAllPizzas();
@@ -162,6 +159,30 @@ public class PizzaController<JBClass> {
         model.addAttribute("pizze", pizzas);
         return "menu";
     }
+
+    // wyswietlanie galerii dla klienta
+    @GetMapping("/gallery")
+    public String showGallery(Model model) {
+        List<Pizza> pizzas = pizzaService.findAllPizzas();
+        pizzas.forEach(pizza -> {
+            if (pizza.getFileContent() != null) {
+                String base64Content = Base64.getEncoder().encodeToString(pizza.getFileContent());
+                pizza.setFileName(base64Content);
+            }
+        });
+        model.addAttribute("pizze", pizzas);
+        return "gallery";
+    }
+
+    // wyswietlanie promocji dla klienta
+    @GetMapping("/promotions")
+    public String showPromotions(Model model) {
+        List<Promotion> promotions = promotionService.findAllPromotions();
+        model.addAttribute("promocje", promotions);
+        return "promotions";
+    }
+
+
 
     // Wyswietlanie pojedynczej pizzy
     @GetMapping("/pizza")
