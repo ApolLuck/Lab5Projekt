@@ -22,6 +22,7 @@
   <div th:each="promocja : ${promocje}" class="pizza-item">
     <h3 th:text="${promocja.title}"></h3>
     <p th:text="${promocja.description}"></p>
+    <h4 th:text="'Z kodem: ' + ${promocja.promotionCode}"></h4>
     <p th:text="'Promocja trwa:'"></p>
     <h3 th:text="'od ' + ${promocja.validFrom} + ' do ' + ${promocja.validTo}"></h3>
     <img th:src="'https://scontent-waw2-2.xx.fbcdn.net/v/t1.6435-9/50110645_10155564828825834_3091821934187380736_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=HntbZ_9SW28Q7kNvgGo8tmR&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=AhYDz5h2CyexocIh0wyEUFN&oh=00_AYDlDpfpjgMior0RLr5QAiFt-zt1U-JDE26eEDTe9ghSPg&oe=67BD84B1'"
@@ -30,19 +31,19 @@
   </div>
 </div>
 
-<div class="cart-icon">
-  <span class="cart-count">0</span>
-  <img src="https://img.icons8.com/ios-filled/50/ffffff/shopping-cart.png" alt="Koszyk">
-</div>
+<!--<div class="cart-icon">-->
+<!--  <span class="cart-count">0</span>-->
+<!--  <img src="https://img.icons8.com/ios-filled/50/ffffff/shopping-cart.png" alt="Koszyk">-->
+<!--</div>-->
 
-<div id="cart-modal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeCart();">&times;</span>
-    <h2>Koszyk</h2>
-    <ul id="cart-list"></ul>
-    <button onclick="continueShopping();">Kontynuuj zakupy</button>
-  </div>
-</div>
+<!--<div id="cart-modal" class="modal">-->
+<!--  <div class="modal-content">-->
+<!--    <span class="close" onclick="closeCart();">&times;</span>-->
+<!--    <h2>Koszyk</h2>-->
+<!--    <ul id="cart-list"></ul>-->
+<!--    <button onclick="continueShopping();">Kontynuuj zakupy</button>-->
+<!--  </div>-->
+<!--</div>-->
 
 <!-- Stopka -->
 <footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">

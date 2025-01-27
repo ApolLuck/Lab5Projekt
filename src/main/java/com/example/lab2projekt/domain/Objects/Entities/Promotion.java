@@ -25,6 +25,7 @@ public class Promotion {
     @NotNull
     private String description;
     private Double discountPercentage;
+    private String promotionCode;
     private LocalDate validFrom;
     private LocalDate validTo;
     @ManyToMany
@@ -35,11 +36,12 @@ public class Promotion {
     )
     private Set<Pizza> pizzas;
 
-    public Promotion(String title, String description, Double discountPercentage,
+    public Promotion(String title, String description, Double discountPercentage, String promotionCode,
                      LocalDate validFrom, LocalDate validTo, Set<Pizza> pizzas) {
         this.title = title;
         this.description = description;
         this.discountPercentage = discountPercentage;
+        this.promotionCode =  promotionCode;
         this.validFrom = validFrom;
         this.validTo = validTo;
         this.pizzas = pizzas;

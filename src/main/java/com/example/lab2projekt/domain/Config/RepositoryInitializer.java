@@ -105,7 +105,7 @@ public class RepositoryInitializer {
                     Set<Pizza> pizzasPromoHawaian = new HashSet<>();
                     pizzasPromoHawaian.add(pizza3);
                     Promotion hawaianWeekPromo = new Promotion("Hawaian Week","Każda pizza hawajska 30% taniej!"
-                            ,30.0, LocalDate.now(),LocalDate.of(2025,2,28),pizzasPromoHawaian);
+                            ,30.0, "HAWAI", LocalDate.now(),LocalDate.of(2025,2,28),pizzasPromoHawaian);
 
                     promotionRepository.save(hawaianWeekPromo);
                 }
