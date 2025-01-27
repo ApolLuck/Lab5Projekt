@@ -21,7 +21,7 @@ public class OrderItemService {
         this.pizzaRepository = pizzaRepository;
     }
 
-    public void createOrderItem(Integer quantity, BigDecimal orderValue, Integer pizzaId){
+    public void createOrderItem(Integer quantity, BigDecimal orderValue, Integer pizzaId, String sessionId){
         Optional<Pizza> optionalPizza = pizzaRepository.findById(pizzaId);
         // Sprawdź, czy znaleziono pizzę
         if (optionalPizza.isEmpty()) {
@@ -34,6 +34,7 @@ public class OrderItemService {
         orderItem.setPizza(pizza);
         orderItem.setPrice(price);
         orderItem.setQuantity(quantity);
+        orderItem.setSessionId(sessionId);
         orderItemRepository.save(orderItem);
     }
 

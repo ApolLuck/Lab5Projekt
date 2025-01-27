@@ -5,6 +5,9 @@ import com.example.lab2projekt.domain.Objects.Entities.*;
 import com.example.lab2projekt.domain.Objects.Formatters.FormatPizzy;
 import com.example.lab2projekt.domain.Objects.Validators.CustomPizzaValidator;
 import com.example.lab2projekt.domain.Services.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.exception.JDBCConnectionException;
@@ -24,6 +27,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @Log4j2
@@ -35,16 +39,18 @@ public class PizzaController<JBClass> {
     private final FileService fileService;
     private final PromotionService promotionService;
     private final OrderItemService orderItemService;
+    private final CookiesService cookiesService;
 
     @Autowired
     public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService,
-                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService) {
+                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService, CookiesService cookiesService) {
         this.pizzaService = pizzaService;
         this.coverTypeService = coverTypeService;
         this.pizzaGenreService = pizzaGenreService;
         this.fileService = fileService;
         this.promotionService = promotionService;
         this.orderItemService = orderItemService;
+        this.cookiesService = cookiesService;
     }
 
     @ModelAttribute("coverTypes")
@@ -187,8 +193,10 @@ public class PizzaController<JBClass> {
 
     // wyswietlanie koszyka dla klienta
     @GetMapping("/basket")
-    public String showBasket(Model model) {
+    public String showBasket(Model model, HttpServletRequest request, HttpServletResponse response) {
         List<OrderItem> orderItems = orderItemService.findAllOrderItems();
+        // Pobierz identyfikator użytkownika z ciasteczka
+        String userCookieId = cookiesService.getCookiesForUser(request,response);
         model.addAttribute("orderItems", orderItems);
         return "basket";
     }
@@ -197,21 +205,15 @@ public class PizzaController<JBClass> {
     public String addToBasket(@RequestParam(value = "pizzaID", required = false) Integer pizzaId ,
                               @RequestParam(value = "quantity", required = false) Integer quantity,
                               @RequestParam(value = "orderValue", required = false) BigDecimal orderValue,
-                              Model model) {
+                              HttpServletRequest request, HttpServletResponse response, Model model) {
 
+        // Pobierz identyfikator użytkownika z ciasteczka
+        String userCookieId = cookiesService.getCookiesForUser(request,response);
         if (!(quantity ==null)){
-            orderItemService.createOrderItem(quantity, orderValue, pizzaId);
+            orderItemService.createOrderItem(quantity, orderValue, pizzaId, userCookieId);
         }
-
         List<OrderItem> orderItems = orderItemService.findAllOrderItems();
-
-        //pizzaService.savePizza(pizza);
-        model.addAttribute("id", pizzaId);
-        model.addAttribute("quantity", quantity);
-        model.addAttribute("orderValue", orderValue);
-
         model.addAttribute("orderItems", orderItems);
-
         return "basket";
     }
 

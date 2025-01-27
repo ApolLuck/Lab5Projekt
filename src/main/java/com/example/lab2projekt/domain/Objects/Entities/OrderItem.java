@@ -35,4 +35,7 @@ public class OrderItem {
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Order order; // Relacja Many-to-One z Order
 
+    @NotNull
+    private String sessionId;
+
 }
