@@ -205,4 +205,33 @@ footer p {
     font-weight: bold;
 }
 
+.discount-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.discount-container input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.discount-container button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #a52a2a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.discount-container button:hover {
+    background-color: #800000;
+}
 

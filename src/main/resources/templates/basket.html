@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="Koszyk"></title>
     <!-- Custom CSS -->
-    <link th:href="@{/css/menuStyle.css}" rel="stylesheet">
+    <link th:href="@{/css/basketStyle.css}" rel="stylesheet">
 </head>
 <body>
 <!-- Górne menu -->
@@ -19,7 +19,7 @@
 
 <!-- Lista zamówień -->
 <div class="order-list">
-    <div th:each="orderItem : ${orderItems}" class="order-item" th:data-price="${orderItem.price}">
+    <div th:each="orderItem : ${orderItems}" class="order-item" th:data-pizzaid="${orderItem.pizza.id}" th:data-price="${orderItem.price}">
         <h4 th:text="${orderItem.pizza.id} + '. ' + ${orderItem.pizza.nazwa} + ' (' + ${orderItem.pizza.rozmiar}
                     + ') - ' + ${orderItem.pizza.coverType.nazwa} + '. Cena: ' + ${orderItem.price} + ' zł'"></h4>
         <div>
@@ -43,6 +43,14 @@
         <h3>Wartość zamówienia: <span id="total-order-value">0</span> zł</h3>
     </div>
 </div>
+
+<!-- Kontener z kodem rabatowym i przyciskiem "Zastosuj" oraz "Do kasy" -->
+<div class="discount-container">
+    <input type="text" id="discount-code" placeholder="Wpisz kod rabatowy">
+    <button onclick="applyDiscount()">Zastosuj</button>
+    <button onclick="window.location.href='@{/payment}'">Do kasy</button>
+</div>
+
 <!-- Stopka -->
 <footer>
     <p class="mb-0" th:text="#{homepage.footer}"></p>
