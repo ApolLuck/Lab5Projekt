@@ -235,3 +235,18 @@ footer p {
     background-color: #800000;
 }
 
+.button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #800000;
+}

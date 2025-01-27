@@ -48,7 +48,8 @@
 <div class="discount-container">
     <input type="text" id="discount-code" placeholder="Wpisz kod rabatowy">
     <button onclick="applyDiscount()">Zastosuj</button>
-    <button onclick="window.location.href='@{/payment}'">Do kasy</button>
+    <a th:href="@{/payment}" class="button">Zamów</a>
+
 </div>
 
 <!-- Stopka -->
