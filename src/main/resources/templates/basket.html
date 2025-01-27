@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="MENU"></title>
+    <title th:text="Koszyk"></title>
     <!-- Custom CSS -->
     <link th:href="@{/css/menuStyle.css}" rel="stylesheet">
 </head>
@@ -17,20 +17,34 @@
     <a th:href="@{/basket}" class="nav-button">Koszyk</a>
 </div>
 
-<!-- Lista promocji -->
-<div class="pizza-list">
-    <div th:each="orderItem : ${orderItems}" class="pizza-item">
-        <h4 th:text="${orderItem.pizza.id} + '. ' +${orderItem.pizza.nazwa} + '. ' +${orderItem.pizza.rozmiar}
-                    + '. ' +${orderItem.pizza.coverType.nazwa} + '.     ' +${orderItem.price}"></h4>
+<!-- Lista zamówień -->
+<div class="order-list">
+    <div th:each="orderItem : ${orderItems}" class="order-item" th:data-price="${orderItem.price}">
+        <h4 th:text="${orderItem.pizza.id} + '. ' + ${orderItem.pizza.nazwa} + ' (' + ${orderItem.pizza.rozmiar}
+                    + ') - ' + ${orderItem.pizza.coverType.nazwa} + '. Cena: ' + ${orderItem.price} + ' zł'"></h4>
         <div>
-            <p th:text="'Ilosc: ' + ${orderItem.quantity}"></p>
+            <button class="value-button" th:onclick="'decreaseItemQuantity(' + ${orderItem.id} + ')'">-</button>
+            <input
+                    type="number"
+                    th:id="'quantity-' + ${orderItem.id}"
+                    th:value="${orderItem.quantity}"
+                    readonly
+            />
+            <button class="value-button" th:onclick="'increaseItemQuantity(' + ${orderItem.id} + ')'">+</button>
         </div>
-
+        <div>
+            <p th:id="'order-item-value-' + ${orderItem.id}"
+               th:text="(${orderItem.quantity} * ${orderItem.price}) + ' zł'">
+            </p>
+        </div>
     </div>
-
+    <!-- Sumaryczna cena zamówienia -->
+    <div class="total-price">
+        <h3>Wartość zamówienia: <span id="total-order-value">0</span> zł</h3>
+    </div>
 </div>
 <!-- Stopka -->
-<footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">
+<footer>
     <p class="mb-0" th:text="#{homepage.footer}"></p>
     <div class="language-selection">
         <a href="?lang=pl">
@@ -42,6 +56,6 @@
     </div>
 </footer>
 <!-- Custom JS -->
-<script th:src="@{/css/js/script.js}"></script>
+<script th:src="@{/css/js/OrderScript.js}"></script>
 </body>
 </html>
