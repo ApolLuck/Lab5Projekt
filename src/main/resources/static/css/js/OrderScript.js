@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     updateTotalOrderValue();
+    updateHiddenFields(); // Upewnij się, że ukryte pola są aktualizowane po załadowaniu strony
 });
 
 function increaseItemQuantity(itemId) {
@@ -45,8 +46,8 @@ function updateOrderItemValue(itemId, quantityOrPrice, price = null) {
     }
 
     updateTotalOrderValue(); // Zawsze aktualizujemy sumę zamówienia
+    updateHiddenFields(); // Aktualizuj ukryte pola za każdym razem, gdy wartość zamówienia się zmienia
 }
-
 
 function updateTotalOrderValue() {
     const orderItems = document.querySelectorAll('.order-item');
@@ -92,11 +93,12 @@ function applyDiscount() {
                     }
 
                     const quantity = parseInt(orderItem.querySelector('input[type="number"]').value, 10);
-                    updateOrderItemValue(pizzaId, quantity, discountedPrice); // Zaktualizuj wartość zamówienia
+                    updateOrderItemValue(orderItem.getAttribute('data-pizzaid'), quantity, discountedPrice); // Zaktualizuj wartość zamówienia
                 }
             });
 
             updateTotalOrderValue(); // Zaktualizuj całą sumę
+            updateHiddenFields(); // Zaktualizuj ukryte pola
             discountApplied = true; // Ustaw flagę
             alert("Kod rabatowy zastosowany.");
         } else {
@@ -116,3 +118,45 @@ const promotions = [
         pizzaIds: [3] // ID pizzy hawajskiej
     }
 ];
+
+function updateHiddenFields() {
+    document.querySelectorAll('.order-item').forEach(orderItem => {
+        const id = orderItem.getAttribute('data-pizzaid'); // Pobieranie id pizzy z atrybutu data-pizzaid
+        const quantityInput = orderItem.querySelector('input[type="number"]');
+        const quantity = quantityInput ? quantityInput.value : 0; // Pobieranie ilości pizzy
+        const price = parseFloat(orderItem.getAttribute('data-price')); // Pobieranie ceny z data-price (po rabacie)
+
+        // Zaktualizowanie ukrytego pola dla ilości
+        const hiddenQuantityInput = document.querySelector(`input[name="items[${id}].quantity"]`);
+        if (hiddenQuantityInput) {
+            hiddenQuantityInput.value = quantity; // Zaktualizowanie ukrytego pola ilości
+        }
+
+        // Zaktualizowanie ukrytego pola dla ceny (po rabacie)
+        const hiddenPriceInput = document.querySelector(`input[name="items[${id}].price"]`);
+        if (hiddenPriceInput) {
+            hiddenPriceInput.value = price.toFixed(2); // Zaktualizowanie ukrytego pola ceny po rabacie
+        }
+    });
+
+    // Zaktualizowanie sumarycznej wartości zamówienia w ukrytym polu
+    const totalValue = document.getElementById('total-order-value').textContent;
+    document.getElementById('hidden-total-order-value').value = totalValue;
+}
+
+// Nasłuchiwanie na zmiany ilości
+document.querySelectorAll('button.value-button').forEach(button => {
+    button.addEventListener('click', updateHiddenFields);
+});
+
+// Upewnienie się, że ukryte pola są zaktualizowane przed wysłaniem formularza
+const form = document.querySelector('form');
+form.addEventListener('submit', function () {
+    updateHiddenFields();
+    copyTotalOrderValueToHiddenField();
+});
+
+function copyTotalOrderValueToHiddenField() {
+    const totalValue = document.getElementById('total-order-value').textContent;
+    document.getElementById('hidden-total-order-value').value = totalValue;
+}

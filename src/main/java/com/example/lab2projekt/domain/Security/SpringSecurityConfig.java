@@ -103,6 +103,7 @@ public class SpringSecurityConfig{
                                 mvcMatcherBuilder.pattern("/gallery"),
                                 mvcMatcherBuilder.pattern("/promotions"),
                                 mvcMatcherBuilder.pattern("/addPizzaToBasket"),
+                                mvcMatcherBuilder.pattern("/createOrder"),
                                 mvcMatcherBuilder.pattern("/basket"),
                                 mvcMatcherBuilder.pattern("/css/**"),
                                 mvcMatcherBuilder.pattern("/js/**"),

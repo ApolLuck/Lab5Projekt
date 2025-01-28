@@ -5,7 +5,6 @@ import com.example.lab2projekt.domain.Objects.Entities.*;
 import com.example.lab2projekt.domain.Objects.Formatters.FormatPizzy;
 import com.example.lab2projekt.domain.Objects.Validators.CustomPizzaValidator;
 import com.example.lab2projekt.domain.Services.*;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -27,7 +26,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 @Controller
 @Log4j2
@@ -40,10 +39,11 @@ public class PizzaController<JBClass> {
     private final PromotionService promotionService;
     private final OrderItemService orderItemService;
     private final CookiesService cookiesService;
+    private final OrderService orderService;
 
     @Autowired
     public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService,
-                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService, CookiesService cookiesService) {
+                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService, CookiesService cookiesService, OrderService orderService) {
         this.pizzaService = pizzaService;
         this.coverTypeService = coverTypeService;
         this.pizzaGenreService = pizzaGenreService;
@@ -51,6 +51,7 @@ public class PizzaController<JBClass> {
         this.promotionService = promotionService;
         this.orderItemService = orderItemService;
         this.cookiesService = cookiesService;
+        this.orderService = orderService;
     }
 
     @ModelAttribute("coverTypes")
@@ -215,6 +216,25 @@ public class PizzaController<JBClass> {
         List<OrderItem> orderItems = orderItemService.findAllOrderItems();
         model.addAttribute("orderItems", orderItems);
         return "basket";
+    }
+
+    @PostMapping("/createOrder")
+    public String createOrder(
+            @RequestParam("totalOrderValue") String totalOrderValue, // Pobieramy wartość totalOrderValue
+            @RequestParam Map<String, String> params // Pobieramy wszystkie parametry
+    ) {
+        // Wyświetlamy sumaryczną wartość zamówienia
+//        System.out.println("Łączna wartość zamówienia: " + totalOrderValue);
+
+        orderService.processOrderCreation(params, totalOrderValue);
+
+        // Iterujemy po tablicy items
+        params.forEach((key, value) -> {
+            if (key.startsWith("items")) {
+                System.out.println("Parametr: " + key + " = " + value);
+            }
+        });
+        return "createOrder";
     }
 
 

@@ -2,6 +2,7 @@ package com.example.lab2projekt.domain.Objects.Entities;
 
 import com.example.lab2projekt.domain.Objects.User.AppUser;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class Order {
     private Long id; // Klucz główny
 
     @NotNull
-    private String orderStatus; // Status zamówienia (np. PENDING)
+    private OrderStatus orderStatus; // Status zamówienia (np. PENDING)
 
     @NotNull
     private BigDecimal totalPrice; // Całkowita cena zamówienia
@@ -43,4 +44,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems; // Relacja One-to-Many z OrderItem
+
+    @Email
+    private String clientEmail;
 }
