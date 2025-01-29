@@ -199,6 +199,7 @@ public class PizzaController<JBClass> {
         // Pobierz identyfikator użytkownika z ciasteczka
         String userCookieId = cookiesService.getCookiesForUser(request,response);
         model.addAttribute("orderItems", orderItems);
+        model.addAttribute("UserCookies", userCookieId);
         return "basket";
     }
 
@@ -215,25 +216,27 @@ public class PizzaController<JBClass> {
         }
         List<OrderItem> orderItems = orderItemService.findAllOrderItems();
         model.addAttribute("orderItems", orderItems);
+        model.addAttribute("UserCookies", userCookieId);
         return "basket";
     }
 
     @PostMapping("/createOrder")
     public String createOrder(
-            @RequestParam("totalOrderValue") String totalOrderValue, // Pobieramy wartość totalOrderValue
-            @RequestParam Map<String, String> params // Pobieramy wszystkie parametry
+            @RequestParam("totalOrderValue") String totalOrderValue,
+            @RequestParam Map<String, String> params,
+            @RequestParam("userCookies") String userCookies
     ) {
         // Wyświetlamy sumaryczną wartość zamówienia
-        System.out.println("Łączna wartość zamówienia: " + totalOrderValue);
+//        System.out.println("Łączna wartość zamówienia: " + totalOrderValue);
 
-        orderService.processOrderCreation(params, totalOrderValue);
+        orderService.processOrderCreation(params, totalOrderValue, userCookies);
 
-        // Iterujemy po tablicy items
-        params.forEach((key, value) -> {
-            if (key.startsWith("items")) {
-                System.out.println("Parametr: " + key + " = " + value);
-            }
-        });
+//        // Iterujemy po tablicy items
+//        params.forEach((key, value) -> {
+//            if (key.startsWith("items")) {
+//                System.out.println("Parametr: " + key + " = " + value);
+//            }
+//        });
         return "createOrder";
     }
 

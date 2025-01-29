@@ -111,12 +111,9 @@ function applyDiscount() {
                     if (hiddenPriceInput) {
                         hiddenPriceInput.value  = newPrice; // Ustaw nową cenę
                     }
-                    alert(hiddenPriceInput.value)
                 }
                 idx++;
             });
-
-
             alert("Kod rabatowy zastosowany.");
         } else {
             alert("Kod rabatowy nie jest aktualnie ważny.");

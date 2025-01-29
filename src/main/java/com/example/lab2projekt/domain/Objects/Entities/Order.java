@@ -47,4 +47,5 @@ public class Order {
 
     @Email
     private String clientEmail;
+    private String userSessionCookie;
 }

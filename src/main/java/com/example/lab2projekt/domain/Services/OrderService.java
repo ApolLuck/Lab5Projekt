@@ -22,7 +22,7 @@ public class OrderService {
     }
 
 
-    public void processOrderCreation(Map<String, String> params, String totalOrderValue) {
+    public void processOrderCreation(Map<String, String> params, String totalOrderValue, String userCookies) {
         // Tworzenie nowego zamówienia
         Order order = new Order();
         order.setTotalPrice(BigDecimal.valueOf(Double.parseDouble(totalOrderValue)));
@@ -67,6 +67,7 @@ public class OrderService {
         order.setOrderItems(new HashSet<>(updatedOrderItems));
 
         order.setOrderStatus(OrderStatus.PENDING);
+        order.setUserSessionCookie(userCookies);
 
         // Zapis zamówienia do bazy
         orderRepository.save(order);

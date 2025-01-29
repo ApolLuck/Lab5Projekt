@@ -63,6 +63,9 @@
         <!-- Ukryte pole dla sumarycznej wartości zamówienia -->
         <input type="hidden" id="hidden-total-order-value" name="totalOrderValue" value="0">
 
+        <!-- Ukryte pole dla ciasteczka -->
+        <input type="hidden" th:name="userCookies" th:value="${UserCookies}" />
+
         <!-- Przycisk do wysłania formularza -->
         <button type="submit" class="button">Do kasy</button>
     </form>
