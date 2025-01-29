@@ -224,7 +224,7 @@ public class PizzaController<JBClass> {
             @RequestParam Map<String, String> params // Pobieramy wszystkie parametry
     ) {
         // Wyświetlamy sumaryczną wartość zamówienia
-//        System.out.println("Łączna wartość zamówienia: " + totalOrderValue);
+        System.out.println("Łączna wartość zamówienia: " + totalOrderValue);
 
         orderService.processOrderCreation(params, totalOrderValue);
 

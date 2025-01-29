@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
     updateTotalOrderValue();
-    updateHiddenFields(); // Upewnij się, że ukryte pola są aktualizowane po załadowaniu strony
 });
 
 function increaseItemQuantity(itemId) {
@@ -46,7 +45,6 @@ function updateOrderItemValue(itemId, quantityOrPrice, price = null) {
     }
 
     updateTotalOrderValue(); // Zawsze aktualizujemy sumę zamówienia
-    updateHiddenFields(); // Aktualizuj ukryte pola za każdym razem, gdy wartość zamówienia się zmienia
 }
 
 function updateTotalOrderValue() {
@@ -98,8 +96,27 @@ function applyDiscount() {
             });
 
             updateTotalOrderValue(); // Zaktualizuj całą sumę
+            resetIndex();
             updateHiddenFields(); // Zaktualizuj ukryte pola
             discountApplied = true; // Ustaw flagę
+
+            let idx = 1;
+            document.querySelectorAll('.order-item').forEach(orderItem => {
+                if (orderItem.hasAttribute('data-original-price')) {
+                    const newPrice = orderItem.getAttribute('data-price'); // Pobierz nową cenę
+
+                    // Znajdź ukryte pole odpowiadające temu elementowi
+                    const hiddenPriceInput = document.querySelector(`input[name="items[${idx}].price"]`);
+
+                    if (hiddenPriceInput) {
+                        hiddenPriceInput.value  = newPrice; // Ustaw nową cenę
+                    }
+                    alert(hiddenPriceInput.value)
+                }
+                idx++;
+            });
+
+
             alert("Kod rabatowy zastosowany.");
         } else {
             alert("Kod rabatowy nie jest aktualnie ważny.");
@@ -119,9 +136,14 @@ const promotions = [
     }
 ];
 
+let index = 1
+function resetIndex(){
+    index = 1
+}
+
 function updateHiddenFields() {
     document.querySelectorAll('.order-item').forEach(orderItem => {
-        const id = orderItem.getAttribute('data-pizzaid'); // Pobieranie id pizzy z atrybutu data-pizzaid
+        const id = index; // Pobieranie zamowienia
         const quantityInput = orderItem.querySelector('input[type="number"]');
         const quantity = quantityInput ? quantityInput.value : 0; // Pobieranie ilości pizzy
         const price = parseFloat(orderItem.getAttribute('data-price')); // Pobieranie ceny z data-price (po rabacie)
@@ -137,23 +159,19 @@ function updateHiddenFields() {
         if (hiddenPriceInput) {
             hiddenPriceInput.value = price.toFixed(2); // Zaktualizowanie ukrytego pola ceny po rabacie
         }
-    });
 
-    // Zaktualizowanie sumarycznej wartości zamówienia w ukrytym polu
-    const totalValue = document.getElementById('total-order-value').textContent;
-    document.getElementById('hidden-total-order-value').value = totalValue;
+        // Zaktualizowanie ukrytego pola dla itemOrderPrice
+        const hiddenItemOrderPriceInput = document.querySelector(`input[name="items[${id}].itemOrderPrice"]`);
+        if (hiddenItemOrderPriceInput) {
+            hiddenItemOrderPriceInput.value = price.toFixed(2); // Zaktualizowanie ukrytego pola itemOrderPrice
+        }
+        index++;
+    });
 }
 
 // Nasłuchiwanie na zmiany ilości
 document.querySelectorAll('button.value-button').forEach(button => {
-    button.addEventListener('click', updateHiddenFields);
-});
-
-// Upewnienie się, że ukryte pola są zaktualizowane przed wysłaniem formularza
-const form = document.querySelector('form');
-form.addEventListener('submit', function () {
-    updateHiddenFields();
-    copyTotalOrderValueToHiddenField();
+    button.addEventListener('click', resetIndex,updateHiddenFields);
 });
 
 function copyTotalOrderValueToHiddenField() {
