@@ -25,6 +25,11 @@ public class OrderService {
         return orderRepository.findByUserSessionCookie(UserCookie);
     }
 
+    public Optional<Order> getOrderById(Order order){
+        Long id = order.getId();
+        return orderRepository.findById(id);
+    }
+
 
     public void processOrderCreation(Map<String, String> params, String totalOrderValue, String userCookies) {
         // Tworzenie nowego zamówienia
@@ -75,5 +80,18 @@ public class OrderService {
 
         // Zapis zamówienia do bazy
         orderRepository.save(order);
+    }
+
+    public void updateOrderEmail(Map<String, String> params, Order order) {
+        String email = params.get("email");
+
+        Long orderId = order.getId();
+        Optional<Order> searchedOrder = orderRepository.findById(orderId);
+        Order findedOrder = searchedOrder.orElseThrow(() -> new RuntimeException("Nie znaleziono zamówienia"));
+
+        findedOrder.setClientEmail(email);
+        orderRepository.save(findedOrder);
+
+
     }
 }

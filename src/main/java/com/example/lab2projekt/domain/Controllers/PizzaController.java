@@ -5,6 +5,7 @@ import com.example.lab2projekt.domain.Objects.Entities.*;
 import com.example.lab2projekt.domain.Objects.Formatters.FormatPizzy;
 import com.example.lab2projekt.domain.Objects.Validators.CustomPizzaValidator;
 import com.example.lab2projekt.domain.Services.*;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -40,10 +41,12 @@ public class PizzaController<JBClass> {
     private final OrderItemService orderItemService;
     private final CookiesService cookiesService;
     private final OrderService orderService;
+    private final AddressService addressService;
+    private final EmailService emailService;
 
     @Autowired
     public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService,
-                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService, CookiesService cookiesService, OrderService orderService) {
+                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService, CookiesService cookiesService, OrderService orderService, AddressService addressService, EmailService emailService) {
         this.pizzaService = pizzaService;
         this.coverTypeService = coverTypeService;
         this.pizzaGenreService = pizzaGenreService;
@@ -52,6 +55,8 @@ public class PizzaController<JBClass> {
         this.orderItemService = orderItemService;
         this.cookiesService = cookiesService;
         this.orderService = orderService;
+        this.addressService = addressService;
+        this.emailService = emailService;
     }
 
     @ModelAttribute("coverTypes")
@@ -237,7 +242,24 @@ public class PizzaController<JBClass> {
         return "createOrder";
     }
 
+    @PostMapping("/submit-order")
+    public String confirmOrder(
+            @RequestParam Map<String, String> params,
+            @RequestParam ("OrderId") Order order
+    ) {
 
+        addressService.createAddress(params, order);
+        orderService.updateOrderEmail(params, order);
+
+        try {
+            emailService.sendConfirmedEmail(params, order);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        return "menu";
+    }
 
 
     // Wyswietlanie pojedynczej pizzy

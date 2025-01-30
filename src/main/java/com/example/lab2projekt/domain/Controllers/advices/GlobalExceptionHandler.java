@@ -29,4 +29,5 @@ public class GlobalExceptionHandler {
         mav.addObject("errorMessage", "Wystąpił błąd: " + ex.getMessage());
         return mav;
     }
+
 }
