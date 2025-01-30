@@ -261,6 +261,14 @@ public class PizzaController<JBClass> {
         return "menu";
     }
 
+    @GetMapping("/yourOrder")
+    public String checkOrder(){
+
+        return "yourOrder";
+    }
+
+
+
 
     // Wyswietlanie pojedynczej pizzy
     @GetMapping("/pizza")

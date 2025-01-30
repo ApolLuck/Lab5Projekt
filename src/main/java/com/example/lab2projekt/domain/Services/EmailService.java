@@ -7,6 +7,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @Service
@@ -36,19 +38,30 @@ public class EmailService {
 
     public void sendConfirmedEmail(Map<String, String> params, Order order) throws MessagingException {
         String clientEmail = params.get("email");
-        String subject = "Złożenie zamówienia nr: " + order.getId();
-        String text = "Dziękujemy za złożenie zamówienia!\n+" +
-                "Sczegóły zamówienia możesz sprawdzić pod adresem: \n" +
-                "Aby sprawdzić zamówienie będzie potrzebny Twój email oraz nr zamówienia.\n" +
-                "Dziękujemy i życzymy smacznego! Do zobaczenia!";
+        String subject = "Potwierdzenie zamówienia nr: " + order.getId();
+
+        // HTML format
+        String text = "<html>" +
+                "<body>" +
+                "<h2>Dziękujemy za złożenie zamówienia!</h2>" +
+                "<p>Twoje zamówienie zostało pomyślnie przyjęte. Szczegóły zamówienia znajdziesz poniżej:</p>" +
+                "<p><strong>Numer zamówienia:</strong> " + order.getId() + "</p>" +
+                "<p><strong>Data złożenia zamówienia:</strong> " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")) + "</p>" +
+                "<p>Możesz sprawdzić szczegóły zamówienia, klikając poniższy link:</p>" +
+                "<p><a href=\"http://localhost:8080/yourOrder" + "\">Sprawdź swoje zamówienie</a></p>" +
+                "<p>Do sprawdzenia zamówienia będzie potrzebny Twój email oraz numer zamówienia.</p>" +
+                "<p>Życzymy smacznego i dziękujemy za zaufanie!<br>Do zobaczenia w naszej pizzerii!</p>" +
+                "</body>" +
+                "</html>";
 
         var mimeMessage = emailSender.createMimeMessage();
         var helper = new MimeMessageHelper(mimeMessage, "utf-8");
         helper.setFrom("pizzeria@uph.edu.pl");
         helper.setTo(clientEmail);
         helper.setSubject(subject);
-        helper.setText(text, true); //
+        helper.setText(text, true);
 
         emailSender.send(mimeMessage);
     }
+
 }

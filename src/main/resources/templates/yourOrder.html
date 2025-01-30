@@ -18,16 +18,16 @@
     <a th:href="@{/yourOrder}" class="nav-button">Zamówienia</a>
 </div>
 
-<!-- Lista pizz -->
-<div class="pizza-list">
-    <div th:each="pizza : ${pizze}" class="pizza-item">
-        <h3 th:text="${pizza.id + '. ' + pizza.nazwa}"></h3>
-        <p th:text="${pizza.skladniki}"></p>
-        <img th:if="${pizza.fileName != null}"
-             th:src="'data:image/jpg;base64,' + ${pizza.fileName}"
-             alt="Obraz pizzy" style="max-width: 200px; max-height: 200px;" />
-    </div>
-</div>
+<!--&lt;!&ndash; Lista pizz &ndash;&gt;-->
+<!--<div class="pizza-list">-->
+<!--    <div th:each="pizza : ${pizze}" class="pizza-item">-->
+<!--        <h3 th:text="${pizza.id + '. ' + pizza.nazwa}"></h3>-->
+<!--        <p th:text="${pizza.skladniki}"></p>-->
+<!--        <img th:if="${pizza.fileName != null}"-->
+<!--             th:src="'data:image/jpg;base64,' + ${pizza.fileName}"-->
+<!--             alt="Obraz pizzy" style="max-width: 200px; max-height: 200px;" />-->
+<!--    </div>-->
+<!--</div>-->
 
 <!-- Stopka -->
 <footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">
