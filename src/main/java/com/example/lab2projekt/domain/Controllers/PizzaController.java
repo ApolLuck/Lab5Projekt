@@ -224,21 +224,19 @@ public class PizzaController<JBClass> {
     public String createOrder(
             @RequestParam("totalOrderValue") String totalOrderValue,
             @RequestParam Map<String, String> params,
-            @RequestParam("userCookies") String userCookies
-    ) {
-        // Wyświetlamy sumaryczną wartość zamówienia
-//        System.out.println("Łączna wartość zamówienia: " + totalOrderValue);
+            @RequestParam("userCookies") String userCookies,
+            Model model) {
 
         orderService.processOrderCreation(params, totalOrderValue, userCookies);
+        List<OrderItem> orderItems = orderItemService.findAllOrderItems();
+        Order order = orderService.getOrderByCookie(userCookies);
 
-//        // Iterujemy po tablicy items
-//        params.forEach((key, value) -> {
-//            if (key.startsWith("items")) {
-//                System.out.println("Parametr: " + key + " = " + value);
-//            }
-//        });
+        model.addAttribute("orderItems", orderItems);
+        model.addAttribute("Order", order);
+
         return "createOrder";
     }
+
 
 
 

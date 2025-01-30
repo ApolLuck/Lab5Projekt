@@ -21,6 +21,10 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
+    public Order getOrderByCookie(String UserCookie){
+        return orderRepository.findByUserSessionCookie(UserCookie);
+    }
+
 
     public void processOrderCreation(Map<String, String> params, String totalOrderValue, String userCookies) {
         // Tworzenie nowego zamówienia

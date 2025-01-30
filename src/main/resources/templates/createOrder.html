@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="Order"></title>
+    <title th:text="Koszyk"></title>
     <!-- Custom CSS -->
-    <link th:href="@{/css/menuStyle.css}" rel="stylesheet">
+    <link th:href="@{/css/ConfirmOrderStyle.css}" rel="stylesheet">
 </head>
 <body>
 <!-- Górne menu -->
@@ -17,8 +17,51 @@
     <a th:href="@{/basket}" class="nav-button">Koszyk</a>
 </div>
 
+<!-- Lista zamówień -->
+<div class="order-list">
+    <div th:each="orderItem : ${orderItems}" class="order-item" th:data-pizzaid="${orderItem.pizza.id}" th:data-price="${orderItem.price}">
+        <h4 th:text="${orderItem.quantity} + ' x '+${orderItem.pizza.id} + '. ' + ${orderItem.pizza.nazwa} + ' ('
+        + ${orderItem.pizza.rozmiar} + ') - ' + ${orderItem.pizza.coverType.nazwa} + '. Cena: ' + ${orderItem.price} + ' zł'" readonly=""></h4>
+        <div>
+            <h5 th:id="'order-item-value-' + ${orderItem.id}"
+               th:text="'Łączna cena: ' + (${orderItem.quantity} * ${orderItem.price}) + ' zł'">
+            </h5>
+        </div>
+    </div>
+
+    <!-- Sumaryczna cena zamówienia -->
+    <div class="total-price">
+        <h3 th:text="'Wartość zamówienia: ' + ${Order.totalPrice} + ' zł'"></h3>
+    </div>
+
+    <!-- Formularz danych adresowych -->
+    <div class="address-form">
+        <h3>Podaj dane do dostawy</h3>
+        <form th:action="@{/submit-order}" method="post">
+            <label for="city">Miejscowość:</label>
+            <input type="text" id="city" name="city" required>
+
+            <label for="street">Ulica:</label>
+            <input type="text" id="street" name="street" required>
+
+            <label for="houseNumber">Nr domu:</label>
+            <input type="text" id="houseNumber" name="houseNumber" required>
+
+            <label for="postalCode">Kod pocztowy:</label>
+            <input type="text" id="postalCode" name="postalCode" pattern="\d{2}-\d{3}" placeholder="00-000" required>
+
+            <label for="email">Adres e-mail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <input type="hidden" id="OrderId" name="OrderId" th:value="${Order.id}">
+
+            <button type="submit" class="button">Opłać zamówienie</button>
+        </form>
+    </div>
+</div>
+
 <!-- Stopka -->
-<footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">
+<footer>
     <p class="mb-0" th:text="#{homepage.footer}"></p>
     <div class="language-selection">
         <a href="?lang=pl">
@@ -30,6 +73,6 @@
     </div>
 </footer>
 <!-- Custom JS -->
-<script th:src="@{/css/js/script.js}"></script>
+<script th:src="@{/css/js/ConfirmOrderScript.js}"></script>
 </body>
 </html>
