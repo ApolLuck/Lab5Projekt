@@ -30,6 +30,10 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
+    public List<Order> searchOrders(String clientEmail, Long id) {
+        return orderRepository.findByClientEmailContainingIgnoreCaseAndId(clientEmail, id);
+    }
+
 
     public void processOrderCreation(Map<String, String> params, String totalOrderValue, String userCookies) {
         // Tworzenie nowego zamówienia
@@ -75,7 +79,7 @@ public class OrderService {
         // Przypisanie zaktualizowanych OrderItems do zamówienia jako Set
         order.setOrderItems(new HashSet<>(updatedOrderItems));
 
-        order.setOrderStatus(OrderStatus.PENDING);
+        order.setOrderStatus(OrderStatus.OPŁACONE);
         order.setUserSessionCookie(userCookies);
 
         // Zapis zamówienia do bazy

@@ -1,0 +1,294 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: #a52a2a;
+    padding: 10px;
+}
+
+.nav-button {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.pizza-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px;
+}
+
+.pizza-item {
+    width: 300px;
+    text-align: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    color: black;
+}
+
+.choose-button {
+    text-decoration: none;
+    background-color: #a52a2a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none; /* Ukryj modal domyślnie */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 200;
+    border-radius: 10px;
+}
+
+.modal-content {
+    position: relative;
+}
+
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+
+/* Ogólny styl strony */
+body {
+    background-image: url('https://www.mojegotowanie.pl/media/cache/big/uploads/media/recipe/0002/71/pizza-pepperoni.jpg');
+    background-size: cover;
+    background-position: center;
+    color: black;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+.overlay {
+    background: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.content {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-text {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.btn-custom {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #e63e00;
+    color: #fff;
+}
+
+/* Stopka */
+footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #222;
+    color: white;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Flagi */
+.language-selection a {
+    margin-left: 10px;
+}
+
+.flag-icon {
+    width: 30px;
+    height: 20px;
+    display: inline-block;
+}
+
+.cart-icon {
+    position: fixed;
+    top: 50%; /* Pozycjonuje koszyk w połowie wysokości okna */
+    right: 20px; /* Odległość od prawej krawędzi */
+    transform: translateY(-50%); /* Przesunięcie na środek */
+    background-color: #a52a2a;
+    color: white;
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 50px; /* Szerokość koszyka */
+    height: 50px; /* Wysokość koszyka */
+    z-index: 100; /* Zapobiega nachodzeniu przez inne elementy */
+}
+
+.cart-icon img {
+    width: 25px;
+    height: 25px;
+}
+
+.cart-count {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #ff4500;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 2px 6px;
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.order-item {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.value-button {
+    text-decoration: none;
+    background-color: #a52a2a;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.total-price {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.discount-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.discount-container input[type="text"] {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 80%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.discount-container button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #a52a2a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.discount-container button:hover {
+    background-color: #800000;
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #800000;
+}
+
+/* Stylowanie tabeli */
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #a52a2a;
+    color: white;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
+}
+
+@media (max-width: 768px) {
+    table {
+        width: 100%;
+    }
+    th, td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+

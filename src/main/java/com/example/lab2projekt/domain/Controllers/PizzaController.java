@@ -256,19 +256,19 @@ public class PizzaController<JBClass> {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
-
         return "menu";
     }
 
     @GetMapping("/yourOrder")
-    public String checkOrder(){
+    public String searchOrders(
+            @RequestParam(name = "clientEmail", required = false, defaultValue = "") String clientEmail,
+            @RequestParam(name = "orderId", required = false) Long orderId,
+            Model model) {
 
+        List<Order> orders = orderService.searchOrders(clientEmail, orderId);
+        model.addAttribute("orders", orders);
         return "yourOrder";
     }
-
-
-
 
     // Wyswietlanie pojedynczej pizzy
     @GetMapping("/pizza")
