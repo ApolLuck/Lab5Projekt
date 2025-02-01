@@ -43,10 +43,11 @@ public class PizzaController<JBClass> {
     private final OrderService orderService;
     private final AddressService addressService;
     private final EmailService emailService;
+    private final PaymentService paymentService;
 
     @Autowired
     public PizzaController(PizzaService pizzaService, CoverTypeService coverTypeService, PizzaGenreService pizzaGenreService,
-                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService, CookiesService cookiesService, OrderService orderService, AddressService addressService, EmailService emailService) {
+                           FileService fileService, PromotionService promotionService, OrderItemService orderItemService, CookiesService cookiesService, OrderService orderService, AddressService addressService, EmailService emailService, PaymentService paymentService) {
         this.pizzaService = pizzaService;
         this.coverTypeService = coverTypeService;
         this.pizzaGenreService = pizzaGenreService;
@@ -57,6 +58,7 @@ public class PizzaController<JBClass> {
         this.orderService = orderService;
         this.addressService = addressService;
         this.emailService = emailService;
+        this.paymentService = paymentService;
     }
 
     @ModelAttribute("coverTypes")
@@ -245,19 +247,45 @@ public class PizzaController<JBClass> {
     @PostMapping("/submit-order")
     public String confirmOrder(
             @RequestParam Map<String, String> params,
-            @RequestParam ("OrderId") Order order
+            @RequestParam ("OrderId") Order order,
+            Model model
     ) {
 
         addressService.createAddress(params, order);
         orderService.updateOrderEmail(params, order);
+        String userEmail = orderService.getEmail(params);
+
+        model.addAttribute("OrderId", order.getId());
+        model.addAttribute("userEmail", userEmail);
+
+        return "payment";
+    }
+
+    @PostMapping("/processPayment")
+    public String paymentProcess(
+            @RequestParam ("creditCardNumber") String creditCardNumber,
+            @RequestParam ("OrderId") Order order,
+            @RequestParam ("userEmail") String userEmail,
+            Model model
+    ) {
+
+        paymentService.createPayment(creditCardNumber, order);
 
         try {
-            emailService.sendConfirmedEmail(params, order);
+            emailService.sendConfirmedEmail(userEmail, order);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-        return "menu";
+
+        List<Pizza> pizze = pizzaService.findAllPizzas();
+        model.addAttribute("pizze", pizze);
+
+
+        return "redirect:menu";
     }
+
+
+
 
     @GetMapping("/yourOrder")
     public String searchOrders(

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="Zamówienia"></title>
+    <title th:text="Płatnosć"></title>
     <!-- Custom CSS -->
-    <link th:href="@{/css/searchOrderStyle.css}" rel="stylesheet">
+    <link th:href="@{/css/paymentStyle.css}" rel="stylesheet">
 </head>
 <body>
 <!-- Górne menu -->
@@ -19,38 +19,22 @@
 </div>
 
 <div class="order-list">
-<h2>Wyszukiwarka zamówień</h2>
-<form action="#" th:action="@{/yourOrder}" method="get">
-    <label for="clientEmail">Email klienta:</label>
-    <input type="text" id="clientEmail" name="clientEmail">
+    <h2>Opłać zamówienie</h2>
+    <form action="#" th:action="@{/processPayment}" method="post">
+        <label for="creditCardNumber">Numer karty kredytowej:</label>
+        <input type="text" id="creditCardNumber" name="creditCardNumber" placeholder="1234 5678 9012 3456" required>
 
-    <label for="orderId">ID zamówienia:</label>
-    <input type="number" id="orderId" name="orderId">
+        <label for="expirationDate">Data ważności (MM/YY):</label>
+        <input type="text" id="expirationDate" name="expirationDate" placeholder="MM/YY" required>
 
-    <button type="submit" class="button">Szukaj</button>
-</form>
+        <label for="cvv">Kod CVV:</label>
+        <input type="text" id="cvv" name="cvv" placeholder="123" required>
 
-<h3>Wyniki wyszukiwania:</h3>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Email klienta</th>
-        <th>Status</th>
-        <th>Cena</th>
-        <th>Data zamówienia</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="order : ${orders}">
-        <td th:text="${order.id}"></td>
-        <td th:text="${order.clientEmail}"></td>
-        <td th:text="${order.orderStatus}"></td>
-        <td th:text="${order.totalPrice}"></td>
-        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
-    </tr>
-    </tbody>
-</table>
+        <input type="hidden" name="userEmail" th:value="${userEmail}">
+        <input type="hidden" name="OrderId" th:value="${OrderId}">
+
+        <button type="submit" class="button">Zapłać</button>
+    </form>
 </div>
 
 <!-- Stopka -->

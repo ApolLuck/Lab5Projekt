@@ -28,7 +28,7 @@ public class EmailService {
 
         var mimeMessage = emailSender.createMimeMessage();
         var helper = new MimeMessageHelper(mimeMessage, "utf-8");
-        helper.setFrom("noreply@uph.edu.pl");
+        helper.setFrom("pizzeria@uph.edu.pl");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(text, true); // wysyłanie w formacie HTML
@@ -36,8 +36,7 @@ public class EmailService {
         emailSender.send(mimeMessage);
     }
 
-    public void sendConfirmedEmail(Map<String, String> params, Order order) throws MessagingException {
-        String clientEmail = params.get("email");
+    public void sendConfirmedEmail(String clientEmail, Order order) throws MessagingException {
         String subject = "Potwierdzenie zamówienia nr: " + order.getId();
 
         // HTML format

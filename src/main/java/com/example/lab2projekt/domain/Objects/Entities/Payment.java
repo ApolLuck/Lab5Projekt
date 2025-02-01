@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.CreditCardNumber;
 
 import java.time.LocalDateTime;
 
@@ -22,13 +23,14 @@ public class Payment {
     private Long id;
 
     @NotNull
-    private String paymentType; // Typ płatności (np. KARTA, PAYPAL)
+    @CreditCardNumber
+    private String creditCardNumber;
 
     @NotNull
-    private String paymentStatus; // Status płatności (np. COMPLETED)
+    private OrderStatus paymentStatus;
 
     @NotNull
-    private LocalDateTime paymentDate; // Data płatności
+    private LocalDateTime paymentDate;
 
     @OneToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")

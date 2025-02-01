@@ -95,7 +95,10 @@ public class OrderService {
 
         findedOrder.setClientEmail(email);
         orderRepository.save(findedOrder);
-
-
     }
+
+    public String getEmail(Map<String, String> params){
+        return params.get("email");
+    }
+
 }
