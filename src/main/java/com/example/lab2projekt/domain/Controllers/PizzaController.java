@@ -284,9 +284,6 @@ public class PizzaController<JBClass> {
         return "redirect:menu";
     }
 
-
-
-
     @GetMapping("/yourOrder")
     public String searchOrders(
             @RequestParam(name = "clientEmail", required = false, defaultValue = "") String clientEmail,

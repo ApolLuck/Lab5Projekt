@@ -3,54 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="Zamówienia"></title>
+    <title th:text="#{orders.title}"></title>
     <!-- Custom CSS -->
     <link th:href="@{/css/searchOrderStyle.css}" rel="stylesheet">
 </head>
 <body>
+
 <!-- Górne menu -->
 <div class="navbar">
-    <a th:href="@{/}" class="nav-button">Strona główna</a>
-    <a th:href="@{/menu}" class="nav-button">Menu</a>
-    <a th:href="@{/promotions}" class="nav-button">Promocje</a>
-    <a th:href="@{/gallery}" class="nav-button">Galeria</a>
-    <a th:href="@{/basket}" class="nav-button">Koszyk</a>
-    <a th:href="@{/yourOrder}" class="nav-button">Zamówienia</a>
+    <a th:href="@{/}" class="nav-button" th:text="#{navbar.home}"></a>
+    <a th:href="@{/menu}" class="nav-button" th:text="#{navbar.menu}"></a>
+    <a th:href="@{/promotions}" class="nav-button" th:text="#{navbar.promotions}"></a>
+    <a th:href="@{/gallery}" class="nav-button" th:text="#{navbar.gallery}"></a>
+    <a th:href="@{/basket}" class="nav-button" th:text="#{navbar.basket}"></a>
+    <a th:href="@{/yourOrder}" class="nav-button" th:text="#{navbar.orders}"></a>
 </div>
 
 <div class="order-list">
-<h2>Wyszukiwarka zamówień</h2>
-<form action="#" th:action="@{/yourOrder}" method="get">
-    <label for="clientEmail">Email klienta:</label>
-    <input type="text" id="clientEmail" name="clientEmail">
+    <h2 th:text="#{orders.search.title}"></h2>
 
-    <label for="orderId">ID zamówienia:</label>
-    <input type="number" id="orderId" name="orderId">
+    <form action="#" th:action="@{/yourOrder}" method="get">
+        <label for="clientEmail" th:text="#{orders.search.email}"></label>
+        <input type="text" id="clientEmail" name="clientEmail">
 
-    <button type="submit" class="button">Szukaj</button>
-</form>
+        <label for="orderId" th:text="#{orders.search.id}"></label>
+        <input type="number" id="orderId" name="orderId">
 
-<h3>Wyniki wyszukiwania:</h3>
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Email klienta</th>
-        <th>Status</th>
-        <th>Cena</th>
-        <th>Data zamówienia</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="order : ${orders}">
-        <td th:text="${order.id}"></td>
-        <td th:text="${order.clientEmail}"></td>
-        <td th:text="${order.orderStatus}"></td>
-        <td th:text="${order.totalPrice}"></td>
-        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
-    </tr>
-    </tbody>
-</table>
+        <button type="submit" class="button" th:text="#{orders.search.button}"></button>
+    </form>
+
+    <h3 th:text="#{orders.results.title}"></h3>
+
+    <table>
+        <thead>
+        <tr>
+            <th th:text="#{orders.results.id}"></th>
+            <th th:text="#{orders.results.email}"></th>
+            <th th:text="#{orders.results.status}"></th>
+            <th th:text="#{orders.results.price}"></th>
+            <th th:text="#{orders.results.date}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.clientEmail}"></td>
+            <td th:text="${order.orderStatus}"></td>
+            <td th:text="${order.totalPrice}"></td>
+            <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <!-- Stopka -->
@@ -65,6 +68,7 @@
         </a>
     </div>
 </footer>
+
 <!-- Custom JS -->
 <script th:src="@{/css/js/script.js}"></script>
 </body>
