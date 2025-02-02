@@ -1,6 +1,7 @@
 package com.example.lab2projekt.domain.Controllers;
 
 import com.example.lab2projekt.domain.Objects.Entities.Promotion;
+import com.example.lab2projekt.domain.Services.PizzaService;
 import com.example.lab2projekt.domain.Services.PromotionService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,11 @@ import java.util.Optional;
 @RequestMapping("/promotions")
 public class PromotionController {
     private final PromotionService promotionService;
+    private final PizzaService pizzaService;
 
-    public PromotionController(PromotionService promotionService) {
+    public PromotionController(PromotionService promotionService, PizzaService pizzaService) {
         this.promotionService = promotionService;
+        this.pizzaService = pizzaService;
     }
 
     @GetMapping("/clientPromotions")
@@ -36,12 +39,14 @@ public class PromotionController {
     @GetMapping("/add")
     public String showAddForm(Model model) {
         model.addAttribute("promotion", new Promotion());
+        model.addAttribute("pizzas", pizzaService.findAllPizzas());
         return "promotionForm";
     }
 
     @PostMapping("/save")
-    public String savePromotion(@Valid @ModelAttribute("promotion") Promotion promotion, BindingResult result) {
+    public String savePromotion(@Valid @ModelAttribute("promotion") Promotion promotion, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("pizzas", pizzaService.findAllPizzas());
             return "promotionForm";
         }
         promotionService.savePromotion(promotion);
@@ -53,6 +58,7 @@ public class PromotionController {
         Optional<Promotion> promotion = promotionService.findPromotionById(id);
         if (promotion.isPresent()) {
             model.addAttribute("promotion", promotion.get());
+            model.addAttribute("pizzas", pizzaService.findAllPizzas());
             return "promotionForm";
         }
         return "redirect:/promotions";
@@ -63,7 +69,4 @@ public class PromotionController {
         promotionService.deletePromotion(id);
         return "redirect:/promotions";
     }
-
-
-
 }

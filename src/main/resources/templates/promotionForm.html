@@ -1,18 +1,35 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Dodaj/Edytuj Promocję</title>
+    <title>Dodaj/Edycja Promocji</title>
 </head>
 <body>
-<h1>Dodaj/Edytuj Promocję</h1>
+<h1>Dodaj/Edycja Promocji</h1>
 <form th:action="@{/promotions/save}" th:object="${promotion}" method="post">
-    <input type="hidden" th:field="*{id}"/>
-    <label>Tytuł: <input type="text" th:field="*{title}" required/></label><br/>
-    <label>Opis: <input type="text" th:field="*{description}" required/></label><br/>
-    <label>Procent rabatu: <input type="number" step="0.01" th:field="*{discountPercentage}"/></label><br/>
-    <label>Kod promocyjny: <input type="text" th:field="*{promotionCode}"/></label><br/>
-    <label>Ważna od: <input type="date" th:field="*{validFrom}"/></label><br/>
-    <label>Ważna do: <input type="date" th:field="*{validTo}"/></label><br/>
+    <label for="title">Tytuł:</label>
+    <input type="text" id="title" name="title" th:field="*{title}" required>
+
+    <label for="description">Opis:</label>
+    <input type="text" id="description" name="description" th:field="*{description}" required>
+
+    <label for="discountPercentage">Procent rabatu:</label>
+    <input type="number" id="discountPercentage" name="discountPercentage" th:field="*{discountPercentage}">
+
+    <label for="promotionCode">Kod promocyjny:</label>
+    <input type="text" id="promotionCode" name="promotionCode" th:field="*{promotionCode}">
+
+    <label for="validFrom">Ważna od:</label>
+    <input type="date" id="validFrom" name="validFrom" th:field="*{validFrom}">
+
+    <label for="validTo">Ważna do:</label>
+    <input type="date" id="validTo" name="validTo" th:field="*{validTo}">
+
+    <h3>Wybierz Pizze:</h3>
+    <div th:each="pizza : ${pizzas}">
+        <input type="checkbox" th:field="*{pizzas}" th:value="${pizza.id}">
+        <label th:for="${'pizza' + pizza.id}" th:text="${pizza.nazwa}"></label><br>
+    </div>
+
     <button type="submit">Zapisz</button>
 </form>
 <a th:href="@{/promotions}">Powrót</a>
