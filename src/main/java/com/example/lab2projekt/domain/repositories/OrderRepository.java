@@ -8,7 +8,8 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
-    Order findByUserSessionCookie(String userSessionCookie);
+    List<Order> findByUserSessionCookie(String userSessionCookie);
+
     List<Order> findByClientEmailContainingIgnoreCaseAndId(String clientEmail, Long id);
 
 }

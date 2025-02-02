@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="Pizza"></title>
+    <title th:text="#{page.title}"></title>
+
     <!-- Custom CSS -->
     <link th:href="@{/css/choosenPizza.css}" rel="stylesheet">
 </head>
@@ -36,13 +37,13 @@
     <div class="radio-group">
         Rozmiar:
         <input type="radio" th:field="*{rozmiar}" value="FAMILIJNA" id="size-familijna" onclick="calculateOrderValue()" />
-        <label th:for="size-familijna">Familijna (42 cm)</label>
+        <label th:for="size-familijna" th:text="#{size.familijna}"></label>
 
         <input type="radio" th:field="*{rozmiar}" value="DUZA" id="size-duza" onclick="calculateOrderValue()" />
-        <label th:for="size-duza">Duża (32 cm)</label>
+        <label th:for="size-duza" th:text="#{size.duza}"></label>
 
         <input type="radio" th:field="*{rozmiar}" value="MALA" id="size-mala" onclick="calculateOrderValue()" />
-        <label th:for="size-mala">Mała (26 cm)</label>
+        <label th:for="size-mala" th:text="#{size.mala}"></label>
 
         <p th:if="${#fields.hasErrors('rozmiar')}" th:errors="*{rozmiar}"></p>
         <br><br>
@@ -50,25 +51,25 @@
 
     <div class="form-row">
         <div class="info-label">
-            <span class="info-value" th:text="'Cena podstawowa (zł)'"></span>
+            <span class="info-value" th:text="#{price.base}"></span>
         </div>
         <div class="info-label">
             <span id="base-price" class="info-value" th:text="*{cena}"></span>
         </div>
     </div>
 
-    Grube ciasto (5.00 zł): <br>
+    <label th:text="#{thick.dough}"></label> (<span th:text="#{extra.cost}"></span>):
     <input type="radio" th:field="*{grube_ciasto}" value="true" onclick="calculateOrderValue()" />Tak
     <input type="radio" th:field="*{grube_ciasto}" value="false" onclick="calculateOrderValue()" />Nie
     <br>
 
-    Dodatkowy ser (5.00 zł): <br>
+    <label th:text="#{extra.cheese}"></label> (<span th:text="#{extra.cost}"></span>):
     <input type="radio" th:field="*{dodatkowy_ser}" value="true" onclick="calculateOrderValue()" />Tak
     <input type="radio" th:field="*{dodatkowy_ser}" value="false" onclick="calculateOrderValue()" />Nie
     <br>
 
     <div class="radio-group">
-        Wybierz opakowanie (Eko/Premium 5.00 zł): <br>
+        <label th:text="#{select.packaging}"></label> (<span th:text="#{eco.premium.cost}"></span>):
         <tr th:each="cover : ${coverTypes}">
                 <input type="radio" th:field="*{coverType}" th:value="${cover.id}" id="cover-${cover.id}" onclick="calculateOrderValue()" />
                 <label th:for="'cover-' + ${cover.id}" th:text="${cover.nazwa}"></label>
@@ -80,11 +81,12 @@
     <input type="number" id="number" value="1" name="quantity" onchange="calculateOrderValue()" />
     <div class="value-button" id="increase" onclick="increaseValue(), calculateOrderValue()">+</div>
     <br>
-    <span id="order-value">Wartość zamówienia: 0 zł</span>
+    <span id="order-value" th:text="#{order.value} + ': 0 ' + #{currency}"></span>
     <input type="hidden" id="hidden-order-value" name="orderValue" value="0" />
     <br><br>
 
-    <input type="submit" value="Dodaj do koszyka"/>
+    <input type="submit" th:value="#{add.to.basket}" />
+
 </form>
 <br>
 

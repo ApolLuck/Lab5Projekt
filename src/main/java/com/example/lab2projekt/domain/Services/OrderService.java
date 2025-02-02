@@ -21,9 +21,21 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Order getOrderByCookie(String UserCookie){
-        return orderRepository.findByUserSessionCookie(UserCookie);
+    public List<Order> getOrdersByCookie(String userCookie) {
+        return orderRepository.findByUserSessionCookie(userCookie);
     }
+
+    public Order getLatestOrderByCookie(String userCookie) {
+        List<Order> orders = orderRepository.findByUserSessionCookie(userCookie);
+
+        if (orders.isEmpty()) {
+            return null;
+        }
+
+        return orders.get(orders.size() - 1);
+    }
+
+
 
     public Optional<Order> getOrderById(Order order){
         Long id = order.getId();

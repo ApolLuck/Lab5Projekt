@@ -27,7 +27,7 @@ function updateHiddenOrderValue() {
     const hiddenOrderValueInput = document.getElementById("hidden-order-value");
 
     // Usuń tekst "Wartość zamówienia: " i " zł", aby pobrać tylko liczbę
-    const rawValue = orderValueElement.textContent.replace("Wartość zamówienia: ", "").replace(" zł", "").trim();
+    const rawValue = orderValueElement.textContent.replace("Koszt: ", "").replace(" zł", "").trim();
 
     // Ustaw wartość ukrytego pola
     hiddenOrderValueInput.value = parseFloat(rawValue) || 0;
@@ -64,7 +64,7 @@ function calculateOrderValue() {
 
     orderValue *= parseInt(document.getElementById('number').value, 10);
 
-    document.getElementById('order-value').textContent = 'Wartość zamówienia: '
+    document.getElementById('order-value').textContent = 'Koszt: '
         + orderValue.toFixed(2) + ' zł';
 
     updateHiddenOrderValue()

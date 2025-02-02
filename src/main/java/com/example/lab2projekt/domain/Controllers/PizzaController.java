@@ -156,7 +156,7 @@ public class PizzaController<JBClass> {
     }
 
     @GetMapping("/addPizzaToBasket")
-    public String addPizzaToBasket(Model model, @RequestParam(value = "id", required = false, defaultValue = "-1") Integer pizzaId) {
+    public String addPizzaToBasket(Model model, @RequestParam(value = "id", defaultValue = "1") Integer pizzaId) {
         Pizza pizza = pizzaService.findPizzaById(pizzaId).orElse(new Pizza());
         model.addAttribute("pizza", pizza);
         return "choosenPizza";
