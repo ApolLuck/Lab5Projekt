@@ -203,6 +203,11 @@ footer p {
     margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
+    display: flex;
+    justify-content: center; /* Centrowanie poziome */
+    align-items: center; /* Centrowanie pionowe */
+    width: 100%; /* Upewnienie się, że szerokość obejmuje całą stronę */
+    text-align: center;
 }
 
 .discount-container {
