@@ -90,14 +90,14 @@
     </tr>
     </tbody>
 </table>
-    <br>
-        <a th:href="@{/}">Powrót do strony głównej</a>
-        <a th:href="@{/addPizza(id=null)}">Dodaj kolejną pizze</a>
-        <a th:href="@{/promotions}">Zarzadzanie promocjami</a>
+<br>
+<a th:href="@{/}">Powrót do strony głównej</a>
+<a th:href="@{/addPizza(id=null)}">Dodaj kolejną pizze</a>
+<a th:href="@{/promotionsManagement}">Zarzadzanie promocjami</a>
 
-    </br>
-    <form th:action="@{/logout}" id="logout" th:method="post">
-        <button type="submit" class="btn btn-warning">Wyloguj</button>
-    </form>
+</br>
+<form th:action="@{/logout}" id="logout" th:method="post">
+    <button type="submit" class="btn btn-warning">Wyloguj</button>
+</form>
 </body>
 </html>

@@ -101,7 +101,7 @@ public class SpringSecurityConfig{
                                 mvcMatcherBuilder.pattern("/polak/**"),
                                 mvcMatcherBuilder.pattern("/details"),
                                 mvcMatcherBuilder.pattern("/gallery"),
-                                mvcMatcherBuilder.pattern("/promotions"),
+                                mvcMatcherBuilder.pattern("/promotions/clientPromotions"),
                                 mvcMatcherBuilder.pattern("/addPizzaToBasket"),
                                 mvcMatcherBuilder.pattern("/createOrder"),
                                 mvcMatcherBuilder.pattern("/basket"),
@@ -114,12 +114,16 @@ public class SpringSecurityConfig{
                         ).permitAll()
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/editPizza"),
-                                mvcMatcherBuilder.pattern("/deletePizza"),
                                 mvcMatcherBuilder.pattern("/addPizza")
+                        ).hasRole("USER")
+                        .requestMatchers(
+                                mvcMatcherBuilder.pattern("/deletePizza")
                         ).hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
-                        .loginPage("/Zaloguj").permitAll());
+                        .loginPage("/Zaloguj")
+                        .defaultSuccessUrl("/pizzas", true)
+                        .permitAll());
 
         http.logout((logout) -> logout.permitAll());
 

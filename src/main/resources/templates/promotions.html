@@ -1,51 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="#{menu.title}"></title>
-  <!-- Custom CSS -->
-  <link th:href="@{/css/menuStyle.css}" rel="stylesheet">
+    <title>Lista Promocji</title>
 </head>
 <body>
+<h1>Lista Promocji</h1>
+<a th:href="@{/promotions/add}">Dodaj Promocję</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tytuł</th>
+        <th>Opis</th>
+        <th>Procent rabatu</th>
+        <th>Kod promocyjny</th>
+        <th>Ważna od</th>
+        <th>Ważna do</th>
+        <th>Opcje</th>
+        <th>Data utworzenia</th>
+        <th>Data edycji</th>
+        <th>Osoba dodająca</th>
+        <th>Osoba modyfikujaca</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="promotion : ${promotions}">
+        <td th:text="${promotion.id}"></td>
+        <td th:text="${promotion.title}"></td>
+        <td th:text="${promotion.description}"></td>
+        <td th:text="${promotion.discountPercentage}"></td>
+        <td th:text="${promotion.promotionCode}"></td>
+        <td th:text="${promotion.validFrom}"></td>
+        <td th:text="${promotion.validTo}"></td>
+        <td>
+            <a th:href="@{/promotions/edit/{id}(id=${promotion.id})}">Edytuj</a>
+            <a th:href="@{/promotions/delete/{id}(id=${promotion.id})}">Usuń</a>
+        </td>
+        <td th:text="${#temporals.format(promotion.createdDate, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${#temporals.format(promotion.modifiedDate, 'yyyy-MM-dd HH:mm')}"></td>
+        <td th:text="${promotion.createdBy}"></td>
+        <td th:text="${promotion.modifiedBy}"></td>
 
-<!-- Górne menu -->
-<div class="navbar">
-  <a th:href="@{/}" class="nav-button" th:text="#{navbar.home}"></a>
-  <a th:href="@{/menu}" class="nav-button" th:text="#{navbar.menu}"></a>
-  <a th:href="@{/promotions}" class="nav-button" th:text="#{navbar.promotions}"></a>
-  <a th:href="@{/gallery}" class="nav-button" th:text="#{navbar.gallery}"></a>
-  <a th:href="@{/basket}" class="nav-button" th:text="#{navbar.basket}"></a>
-  <a th:href="@{/yourOrder}" class="nav-button" th:text="#{navbar.orders}"></a>
-</div>
-
-<!-- Lista promocji -->
-<div class="pizza-list">
-  <div th:each="promocja : ${promocje}" class="pizza-item">
-    <h3 th:text="${promocja.title}"></h3>
-    <p th:text="${promocja.description}"></p>
-    <h4 th:text="#{promotions.code} + ' ' + ${promocja.promotionCode}"></h4>
-    <p th:text="#{promotions.duration}"></p>
-    <h3 th:text="#{promotions.valid.from} + ' ' + ${promocja.validFrom} + ' ' + #{promotions.valid.to} + ' ' + ${promocja.validTo}"></h3>
-    <img th:src="'https://scontent-waw2-2.xx.fbcdn.net/v/t1.6435-9/50110645_10155564828825834_3091821934187380736_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=127cfc&_nc_ohc=HntbZ_9SW28Q7kNvgGo8tmR&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=AhYDz5h2CyexocIh0wyEUFN&oh=00_AYDlDpfpjgMior0RLr5QAiFt-zt1U-JDE26eEDTe9ghSPg&oe=67BD84B1'"
-         alt="Obraz pizzy" style="max-width: 300px; max-height: 300px;" />
-  </div>
-</div>
-
-<!-- Stopka -->
-<footer class="d-flex justify-content-between align-items-center py-3 bg-dark text-light px-4">
-  <p class="mb-0" th:text="#{homepage.footer}"></p>
-  <div class="language-selection">
-    <a href="?lang=pl">
-      <img src="https://flagcdn.com/w2560/pl.png" alt="Polski" class="flag-icon">
-    </a>
-    <a href="?lang=en">
-      <img src="https://flagcdn.com/w2560/gb.png" alt="English" class="flag-icon">
-    </a>
-  </div>
-</footer>
-
-<!-- Custom JS -->
-<script th:src="@{/css/js/script.js}"></script>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/}">Powrót</a>
 </body>
 </html>

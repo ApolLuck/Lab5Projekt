@@ -5,6 +5,7 @@ import com.example.lab2projekt.domain.repositories.PromotionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PromotionService {
@@ -17,4 +18,18 @@ public class PromotionService {
     public List<Promotion> findAllPromotions() {
         return promotionRepository.findAll();
     }
+
+
+    public Optional<Promotion> findPromotionById(Integer id) {
+        return promotionRepository.findById(Long.valueOf(id));
+    }
+
+    public Promotion savePromotion(Promotion promotion) {
+        return promotionRepository.save(promotion);
+    }
+
+    public void deletePromotion(Integer id) {
+        promotionRepository.deleteById(Long.valueOf(id));
+    }
+
 }

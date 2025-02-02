@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Configuration
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class JpaConfig {
     private static final Logger logger = LoggerFactory.getLogger(JpaConfig.class);
 
@@ -21,7 +21,7 @@ public class JpaConfig {
     public AuditorAware<String> auditorAware() {
         return () -> {
             var auth = SecurityContextHolder.getContext().getAuthentication();
-            if (auth != null && auth.isAuthenticated()) {
+            if (auth != null && auth.isAuthenticated() && auth.getPrincipal() instanceof User) {
                 var login = ((User) auth.getPrincipal()).getUsername();
                 logger.info("Pobrano dane użytkownika: {}", login);
                 return Optional.of(login);
@@ -31,3 +31,4 @@ public class JpaConfig {
         };
     }
 }
+

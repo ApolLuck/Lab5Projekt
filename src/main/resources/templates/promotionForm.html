@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj/Edytuj Promocję</title>
+</head>
+<body>
+<h1>Dodaj/Edytuj Promocję</h1>
+<form th:action="@{/promotions/save}" th:object="${promotion}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <label>Tytuł: <input type="text" th:field="*{title}" required/></label><br/>
+    <label>Opis: <input type="text" th:field="*{description}" required/></label><br/>
+    <label>Procent rabatu: <input type="number" step="0.01" th:field="*{discountPercentage}"/></label><br/>
+    <label>Kod promocyjny: <input type="text" th:field="*{promotionCode}"/></label><br/>
+    <label>Ważna od: <input type="date" th:field="*{validFrom}"/></label><br/>
+    <label>Ważna do: <input type="date" th:field="*{validTo}"/></label><br/>
+    <button type="submit">Zapisz</button>
+</form>
+<a th:href="@{/promotions}">Powrót</a>
+</body>
+</html>
