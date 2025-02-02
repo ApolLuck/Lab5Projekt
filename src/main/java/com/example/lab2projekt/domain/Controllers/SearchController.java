@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 
 @Controller
@@ -29,8 +30,14 @@ public class SearchController {
             Model model) {
 
         List<Pizza> pizzas = pizzaService.findPizzasByFilter(pharse, cenaOd, cenaDo, dataOd, dataDo);
-        model.addAttribute("pizzas", pizzas);
-        return "pizzaList";
+        pizzas.forEach(pizza -> {
+            if (pizza.getFileContent() != null) {
+                String base64Content = Base64.getEncoder().encodeToString(pizza.getFileContent());
+                pizza.setFileName(base64Content);
+            }
+        });
+        model.addAttribute("pizze", pizzas);
+        return "showMenu";
     }
 
 
