@@ -70,12 +70,16 @@ public class Pizza {
     @NotEmpty
     @ManyToMany(fetch=FetchType.EAGER)
     private Set<PizzaGenre> genres;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @CreatedDate
     private LocalDateTime createdDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @CreatedBy
     private String createdBy;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @LastModifiedBy
     private String modifiedBy;
     @Lob

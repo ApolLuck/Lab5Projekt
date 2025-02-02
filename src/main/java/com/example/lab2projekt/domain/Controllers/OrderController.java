@@ -27,10 +27,11 @@ public class OrderController {
     private final PaymentService paymentService;
     private final EmailService emailService;
     private final PizzaService pizzaService;
+    private final PromotionService promotionService;
 
     public OrderController(OrderItemService orderItemService, CookiesService cookiesService, OrderService orderService,
                            AddressService addressService, PaymentService paymentService, EmailService emailService,
-                           PizzaService pizzaService) {
+                           PizzaService pizzaService, PromotionService promotionService) {
         this.orderItemService = orderItemService;
         this.cookiesService = cookiesService;
         this.orderService = orderService;
@@ -38,6 +39,7 @@ public class OrderController {
         this.paymentService = paymentService;
         this.emailService = emailService;
         this.pizzaService = pizzaService;
+        this.promotionService = promotionService;
     }
 
     // wyswietlanie koszyka dla klienta
@@ -48,6 +50,7 @@ public class OrderController {
         String userCookieId = cookiesService.getCookiesForUser(request,response);
         model.addAttribute("orderItems", orderItems);
         model.addAttribute("UserCookies", userCookieId);
+        model.addAttribute("promotions", promotionService.findAllPromotions());
         return "basket";
     }
 
@@ -65,6 +68,7 @@ public class OrderController {
         List<OrderItem> orderItems = orderItemService.findAllOrderItems();
         model.addAttribute("orderItems", orderItems);
         model.addAttribute("UserCookies", userCookieId);
+        model.addAttribute("promotions", promotionService.findAllPromotions());
         return "basket";
     }
 

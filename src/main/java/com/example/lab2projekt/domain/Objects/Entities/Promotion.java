@@ -11,6 +11,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -35,12 +36,16 @@ public class Promotion {
     private String promotionCode;
     private LocalDate validFrom;
     private LocalDate validTo;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @CreatedDate
     private LocalDateTime createdDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @LastModifiedDate
     private LocalDateTime modifiedDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @CreatedBy
     private String createdBy;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @LastModifiedBy
     private String modifiedBy;
     @ManyToMany
