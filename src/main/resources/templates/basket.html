@@ -87,6 +87,21 @@
 </footer>
 
 <!-- Custom JS -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const promotions = /*[[${promotions}]]*/ [];
+
+    const formattedPromotions = promotions.map(promo => ({
+        code: promo.promotionCode,
+        discountPercentage: promo.discountPercentage,
+        validFrom: new Date(promo.validFrom),
+        validTo: new Date(promo.validTo),
+        pizzaIds: promo.pizzas.map(pizza => pizza.id)
+    }));
+
+    console.log("Załadowane promocje:", formattedPromotions);
+    /*]]>*/
+</script>
 <script th:src="@{/css/js/OrderScript.js}"></script>
 </body>
 </html>

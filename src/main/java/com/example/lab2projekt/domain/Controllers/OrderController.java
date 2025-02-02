@@ -60,7 +60,6 @@ public class OrderController {
                               @RequestParam(value = "orderValue", required = false) BigDecimal orderValue,
                               HttpServletRequest request, HttpServletResponse response, Model model) {
 
-        // Pobierz identyfikator użytkownika z ciasteczka
         String userCookieId = cookiesService.getCookiesForUser(request,response);
         if (!(quantity ==null)){
             orderItemService.createOrderItem(quantity, orderValue, pizzaId, userCookieId);

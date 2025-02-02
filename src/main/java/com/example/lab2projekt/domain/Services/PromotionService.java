@@ -25,6 +25,9 @@ public class PromotionService {
     }
 
     public Promotion savePromotion(Promotion promotion) {
+        if (promotion.getPromotionCode() != null) {
+            promotion.setPromotionCode(promotion.getPromotionCode().toUpperCase());
+        }
         return promotionRepository.save(promotion);
     }
 

@@ -71,7 +71,8 @@ function applyDiscount() {
     }
 
     const discountCode = document.getElementById('discount-code').value.trim();
-    const promotion = promotions.find(promo => promo.code === discountCode.toUpperCase());
+    const promotion = formattedPromotions.find(promo => promo.code === discountCode.toUpperCase());
+
     if (promotion) {
         const now = new Date();
         if (now >= promotion.validFrom && now <= promotion.validTo) {
@@ -82,38 +83,23 @@ function applyDiscount() {
                     const originalPrice = parseFloat(orderItem.getAttribute('data-original-price')) || parseFloat(orderItem.getAttribute('data-price'));
                     const discountedPrice = originalPrice * (1 - (promotion.discountPercentage / 100));
                     orderItem.setAttribute('data-price', discountedPrice.toFixed(2));
-                    orderItem.setAttribute('data-original-price', originalPrice.toFixed(2)); // Zapamiętaj pierwotną cenę
+                    orderItem.setAttribute('data-original-price', originalPrice.toFixed(2));
 
-                    // Zaktualizuj widoczną cenę pizzy
+                    // Aktualizacja wyświetlanej ceny
                     const priceElement = orderItem.querySelector('h4');
                     if (priceElement) {
                         priceElement.textContent = `${priceElement.textContent.split('-')[0].trim()} - Cena: ${discountedPrice.toFixed(2)} zł`;
                     }
 
                     const quantity = parseInt(orderItem.querySelector('input[type="number"]').value, 10);
-                    updateOrderItemValue(orderItem.getAttribute('data-pizzaid'), quantity, discountedPrice); // Zaktualizuj wartość zamówienia
+                    updateOrderItemValue(orderItem.getAttribute('data-pizzaid'), quantity, discountedPrice);
                 }
             });
 
-            updateTotalOrderValue(); // Zaktualizuj całą sumę
+            updateTotalOrderValue();
             resetIndex();
-            updateHiddenFields(); // Zaktualizuj ukryte pola
-            discountApplied = true; // Ustaw flagę
-
-            let idx = 1;
-            document.querySelectorAll('.order-item').forEach(orderItem => {
-                if (orderItem.hasAttribute('data-original-price')) {
-                    const newPrice = orderItem.getAttribute('data-price'); // Pobierz nową cenę
-
-                    // Znajdź ukryte pole odpowiadające temu elementowi
-                    const hiddenPriceInput = document.querySelector(`input[name="items[${idx}].price"]`);
-
-                    if (hiddenPriceInput) {
-                        hiddenPriceInput.value  = newPrice; // Ustaw nową cenę
-                    }
-                }
-                idx++;
-            });
+            updateHiddenFields();
+            discountApplied = true;
             alert("Kod rabatowy zastosowany.");
         } else {
             alert("Kod rabatowy nie jest aktualnie ważny.");
@@ -123,15 +109,16 @@ function applyDiscount() {
     }
 }
 
-const promotions = [
-    {
-        code: "HAWAI",
-        discountPercentage: 30,
-        validFrom: new Date('2025-01-01'),
-        validTo: new Date('2025-02-28'),
-        pizzaIds: [3] // ID pizzy hawajskiej
-    }
-];
+
+// const promotions = [
+//     {
+//         code: "HAWAI",
+//         discountPercentage: 30,
+//         validFrom: new Date('2025-01-01'),
+//         validTo: new Date('2025-02-28'),
+//         pizzaIds: [3] // ID pizzy hawajskiej
+//     }
+// ];
 
 let index = 1
 function resetIndex(){
