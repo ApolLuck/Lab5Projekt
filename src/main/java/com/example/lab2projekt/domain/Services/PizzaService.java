@@ -11,7 +11,9 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -118,5 +120,13 @@ public class PizzaService {
             throw new PizzaNotFoundException("Pizza o id " + pizzaId + " nie została znaleziona");
         }
         return pizzaOptional.get();
+    }
+
+    public void addFile(MultipartFile multipartFile, Pizza pizza) throws IOException {
+        if(!multipartFile.isEmpty()) {
+            pizza.setFileName(multipartFile.getOriginalFilename());
+            pizza.setFileContent(multipartFile.getBytes());
+        }
+        savePizza(pizza);
     }
 }

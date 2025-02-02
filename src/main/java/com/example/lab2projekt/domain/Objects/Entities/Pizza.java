@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -23,6 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @NamedQuery(name = "Pizza.findByPhraseInNameOrCoverType",
         query = "select p from Pizza p " +
                 "where upper(p.nazwa) like upper(?1) " +            // gdzie ?1 to pierwszy parametr wywołania
