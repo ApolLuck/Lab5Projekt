@@ -77,6 +77,7 @@ public class OrderController {
 
         orderService.processOrderCreation(params, totalOrderValue, userCookies);
         List<OrderItem> orderItems = orderItemService.findAllOrderItems();
+        System.out.println("Przesszło");
         Order order = orderService.getOrderByCookie(userCookies);
 
         model.addAttribute("orderItems", orderItems);

@@ -120,8 +120,10 @@ public class PizzaController<JBClass> {
     }
 
     @PostMapping("/addPizza")
-    public String addPizza(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult result) {
+    public String addPizza(@Valid @ModelAttribute("pizza") Pizza pizza, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("coverTypes", coverTypeService.findAllCoverTypes());
+            model.addAttribute("pizzaGenres", pizzaGenreService.findAllGenres());
             return "editForm";
         }
         pizzaService.savePizza(pizza);

@@ -38,5 +38,6 @@ public class OrderItemService {
         orderItemRepository.save(orderItem);
     }
 
-    public List<OrderItem> findAllOrderItems() { return orderItemRepository.findAll(); }
+    public List<OrderItem> findAllOrderItems() {
+        return orderItemRepository.findAll(); }
 }

@@ -23,7 +23,7 @@ public class Payment {
     private Long id;
 
     @NotNull
-    @CreditCardNumber
+    //@CreditCardNumber
     private String creditCardNumber;
 
     @NotNull

@@ -115,7 +115,7 @@ public class SpringSecurityConfig{
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/editPizza"),
                                 mvcMatcherBuilder.pattern("/addPizza")
-                        ).hasRole("USER")
+                        ).hasRole("ADMIN")
                         .requestMatchers(
                                 mvcMatcherBuilder.pattern("/deletePizza")
                         ).hasRole("ADMIN")
